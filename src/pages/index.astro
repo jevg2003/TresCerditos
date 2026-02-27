@@ -1,0 +1,21 @@
+---
+import "../styles/global.css";
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Products from '../components/Products.astro';
+import Mission from '../components/Mission.astro';
+import Footer from '../components/Footer.astro';
+import ContactFab from '../components/ContactFab.astro';
+---
+
+<Layout>
+	<Navbar />
+	<main class="pt-20 px-4 md:px-8 max-w-7xl mx-auto space-y-32">
+		<Hero />
+		<Products />
+		<Mission />
+	</main>
+	<Footer />
+	<ContactFab />
+</Layout>
