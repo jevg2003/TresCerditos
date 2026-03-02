@@ -12,6 +12,45 @@ import "../styles/global.css";
 ---
 
 <Layout title="Lechoneria Tres Cerditos">
+	<style is:global>
+		/* 1. CENTRADO EXCLUSIVO DE TEXTOS */
+		/* Solo afectamos al contenido escrito, no a los contenedores */
+		h1, h2, h3, h4, h5, h6, p, span, b, strong {
+			text-align: center !important;
+			display: block !important; /* Asegura que el centrado funcione en spans */
+			width: 100% !important;
+		}
+
+		/* 2. EXCEPCIONES PARA BOTONES Y CONTROLES */
+		/* Evitamos que el 'display: block' de arriba rompa los iconos dentro de botones */
+		button span, a span, .control-box span {
+			display: inline !important; 
+			width: auto !important;
+		}
+
+		/* 3. AJUSTE DE TAMAÑO PARA EL HERO EN MÓVIL */
+		/* Esto es solo para que "Lechoneria Tres Cerditos" quepa en la pantalla */
+		@media (max-width: 768px) {
+			#inicio h1 {
+			font-size: 2.8rem !important; /* Ajuste manual para que no se desborde */
+			line-height: 1.1 !important;
+			padding: 0 10px !important;
+			}
+			
+			/* Centramos los grupos de botones sin cambiar su forma */
+			.flex-wrap, .flex {
+			justify-content: center !important;
+			}
+		}
+
+		/* 4. LIMPIEZA DE MÁRGENES EN PÁRRAFOS */
+		/* Para que el centrado sea perfecto, eliminamos alineaciones extra */
+		p {
+			margin-left: auto !important;
+			margin-right: auto !important;
+			max-width: 100% !important;
+		}
+		</style>
 	<Navbar />
 	
 	<main class="pt-20 px-4 md:px-8 max-w-7xl mx-auto space-y-32">
