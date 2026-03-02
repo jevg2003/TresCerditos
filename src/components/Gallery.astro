@@ -1,0 +1,162 @@
+---
+const images = [
+  { src: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000", alt: "Lechona Tradicional" },
+  { src: "https://images.unsplash.com/photo-1606787366850-de6330128bfc?q=80&w=1000", alt: "Nuestros Ingredientes" },
+  { src: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000", alt: "Plato Especial" },
+  { src: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1000", alt: "Evento Familiar" },
+];
+---
+
+<section id="galeria" class="py-20 reveal">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="mb-10 text-center md:text-left">
+      <h2 class="text-4xl md:text-6xl font-black uppercase italic text-zinc-900 dark:text-black">Nuestra <span class="text-red-500">Galería</span></h2>
+      <p class="text-zinc-500 font-medium mt-2">Momentos capturados para tu paladar.</p>
+    </div>
+    
+    <div id="gallery-observer-target" class="relative group aspect-video md:aspect-[21/9] rounded-[2.5rem] overflow-hidden bg-black shadow-2xl border border-zinc-200 dark:border-zinc-800">
+      <img id="bg-blur" src={images[0].src} class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-30 scale-110" />
+      <img 
+        id="main-stage" 
+        src={images[0].src} 
+        alt="Visualización" 
+        class="relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10"
+      />
+      <div class="absolute bottom-0 left-0 h-1 bg-red-500 z-20 transition-all duration-[4000ms] ease-linear w-0" id="progress-bar"></div>
+    </div>
+
+    <div class="mt-8 relative px-2">
+      <div 
+        id="thumb-container"
+        class="flex gap-3 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing"
+      >
+        {images.map((img, index) => (
+          <button 
+            class="thumb-btn flex-shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden snap-start relative transition-all duration-300 opacity-40 hover:opacity-100"
+            data-src={img.src}
+            data-index={index}
+          >
+            <img src={img.src} alt={img.alt} class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-white/10 pointer-events-none"></div>
+          </button>
+        ))}
+      </div>
+      
+      <div class="hidden md:block absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-zinc-200 rounded-full overflow-hidden">
+         <div id="scroll-indicator" class="h-full bg-red-500 w-1/4 transition-all duration-300 relative"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Clase activa manual para evitar errores de Tailwind v4 en el build */
+  .is-active {
+    opacity: 1 !important;
+    outline: 4px solid #fb2c36;
+    outline-offset: 2px;
+    transform: scale(0.95);
+  }
+</style>
+
+<script>
+  const thumbBtns = document.querySelectorAll('.thumb-btn');
+  const mainImg = document.getElementById('main-stage') as HTMLImageElement;
+  const bgBlur = document.getElementById('bg-blur') as HTMLImageElement;
+  const progressBar = document.getElementById('progress-bar');
+  const container = document.getElementById('thumb-container');
+  const gallerySection = document.getElementById('gallery-observer-target');
+  
+  let currentIndex = 0;
+  let interval: any;
+  let isVisible = false;
+
+  function updateGallery(index: number) {
+    currentIndex = index;
+    const btn = thumbBtns[index];
+    const newSrc = btn.getAttribute('data-src');
+
+    // Cambiar Imagen Principal
+    if (mainImg && newSrc) {
+        mainImg.style.opacity = '0.5';
+        setTimeout(() => {
+            mainImg.src = newSrc;
+            if (bgBlur) bgBlur.src = newSrc;
+            mainImg.style.opacity = '1';
+        }, 150);
+    }
+
+    // Actualizar Miniaturas (Clase Manual)
+    thumbBtns.forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+
+    // Scroll inteligente de miniaturas (Sin saltos de página)
+    if (container) {
+      const btnElem = btn as HTMLElement;
+      const scrollPos = btnElem.offsetLeft - (container.offsetWidth / 2) + (btnElem.offsetWidth / 2);
+      container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+    }
+
+    // Reiniciar Barra de Progreso
+    if (progressBar) {
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+        if (isVisible) {
+          setTimeout(() => {
+              progressBar.style.transition = 'width 4000ms linear';
+              progressBar.style.width = '100%';
+          }, 50);
+        }
+    }
+  }
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    interval = setInterval(() => {
+      if (isVisible) {
+        currentIndex = (currentIndex + 1) % thumbBtns.length;
+        updateGallery(currentIndex);
+      }
+    }, 4000);
+  }
+
+  function stopAutoPlay() {
+    if (interval) clearInterval(interval);
+  }
+
+  // Interacción manual
+  thumbBtns.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      updateGallery(i);
+      startAutoPlay(); 
+    });
+  });
+
+  // OPTIMIZACIÓN: Solo funciona si está en pantalla
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) {
+        startAutoPlay();
+        updateGallery(currentIndex);
+      } else {
+        stopAutoPlay();
+        if (progressBar) progressBar.style.width = '0%';
+      }
+    });
+  }, { threshold: 0.5 }); // Se activa cuando el 50% de la galería es visible
+
+  if (gallerySection) observer.observe(gallerySection);
+
+  // Indicador de scroll de barrita
+  container?.addEventListener('scroll', () => {
+    const indicator = document.getElementById('scroll-indicator');
+    if (indicator && container) {
+        const scrollPercent = (container.scrollLeft / (container.scrollWidth - container.clientWidth)) * 100;
+        indicator.style.left = `${scrollPercent}%`;
+    }
+  });
+</script>

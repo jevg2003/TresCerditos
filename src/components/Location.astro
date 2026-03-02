@@ -1,0 +1,66 @@
+---
+// Puedes cambiar estas URLs por fotos reales de la fachada de tu local
+const exteriorPhotos = [
+  { src: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1000", alt: "Fachada del local" },
+  { src: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000", alt: "Entrada principal" }
+];
+
+const googleMapsEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.6713!2d-76.5092!3d3.4378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6fba423b5dd%3A0xcbcb3bf0c5f8186a!2sLechonas%20Los%20Tres%20Cerditos!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco";
+---
+
+<section id="ubicacion" class="py-24 reveal">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="mb-12 text-center md:text-left">
+      <h2 class="text-4xl md:text-6xl font-black uppercase italic italic text-zinc-900 dark:text-black">
+        ¿Dónde <span class="text-red-500">Estamos?</span>
+      </h2>
+      <p class="text-zinc-500 font-medium mt-2">Visítanos y vive la experiencia en persona.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+      
+      <div class="h-[400px] lg:h-full min-h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800 relative">
+        <iframe
+          src={googleMapsEmbed}
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="grayscale hover:grayscale-0 transition-all duration-700"
+        ></iframe>
+        <div class="absolute bottom-6 left-6 right-6 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md p-4 rounded-2xl shadow-xl">
+           <p class="text-sm font-bold text-zinc-900 dark:text-black">📍 Cra. 23 #33Ebis-111</p>
+           <p class="text-xs text-zinc-500">Comuna 8, Cali, Valle del Cauca</p>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="grid grid-cols-1 gap-6 h-full">
+          {exteriorPhotos.map((photo, index) => (
+            <div class={`relative rounded-[2.5rem] overflow-hidden group shadow-lg ${index === 0 ? 'h-64' : 'h-48'}`}>
+              <img 
+                src={photo.src} 
+                alt={photo.alt} 
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+                <span class="text-white font-bold uppercase tracking-widest text-sm">Nuestro Local</span>
+              </div>
+            </div>
+          ))}
+          
+          <div class="bg-red-500 p-8 rounded-[2.5rem] text-zinc-900 flex flex-col justify-center">
+            <h3 class="text-2xl font-black uppercase mb-4 italic">Horario de Atención</h3>
+            <div class="space-y-2 font-bold">
+              <p class="flex justify-between border-b border-black/10 pb-1"><span>Lun - Sáb:</span> <span>8:00 AM - 6:00 PM</span></p>
+              <p class="flex justify-between"><span>Dom - Fes:</span> <span>9:00 AM - 2:00 PM</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

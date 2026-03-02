@@ -1,36 +1,104 @@
 <nav class="fixed top-0 w-full z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl border-b border-zinc-200 dark:border-zinc-800">
   <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-    <div class="flex items-center gap-2 group cursor-pointer">
-      <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:rotate-12 transition-transform">3C</div>
+    <a href="#inicio" class="flex items-center gap-2 group cursor-pointer">
+      <div class="w-10 h-10 bg-red-500 rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:rotate-12 transition-transform shadow-lg shadow-red-500/20">3C</div>
       <span class="font-black text-xl tracking-tighter text-zinc-900 dark:text-white uppercase">
-        Lechoneria <span class="text-orange-500 text-sm block leading-none">Tres Cerditos</span>
+        Lechoneria <span class="text-red-500 text-sm block leading-none">Tres Cerditos</span>
       </span>
-    </div>
+    </a>
     
     <div class="hidden md:flex items-center gap-8 text-xs font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-200">
-      <a href="#inicio" class="hover:text-orange-500 transition-colors">Inicio</a>
-      <a href="#productos" class="hover:text-orange-500 transition-colors">Menú</a>
-      <a href="#nosotros" class="hover:text-orange-500 transition-colors">Nosotros</a>
-      <a href="#contacto" class="bg-orange-500 text-white px-6 py-2 rounded-full hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all">Pedir</a>
+      <a href="#inicio" class="hover:text-red-500 transition-colors">Inicio</a>
+      <a href="#productos" class="hover:text-red-500 transition-colors">Menú</a>
+      <a href="#nosotros" class="hover:text-red-500 transition-colors">Nosotros</a>
+      <a href="#galeria" class="hover:text-red-500 transition-colors">Galería</a>
+      <a href="#ubicacion" class="hover:text-red-500 transition-colors">Ubicación</a>
+      <a href="#contacto" class="bg-red-500 text-white px-6 py-2 rounded-full hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:scale-105 transition-all">Pedir</a>
     </div>
 
-    <button class="md:hidden text-orange-500 p-2" id="menu-btn">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-      </svg>
+    <button class="md:hidden relative w-10 h-10 flex items-center justify-center group" id="menu-btn" aria-label="Abrir menú">
+      <div class="flex flex-col gap-1.5 w-6 transition-all duration-300" id="hamburger-icon">
+        <span class="w-full h-1 bg-red-500 rounded-full transition-all duration-300 origin-center line-1"></span>
+        <span class="w-full h-1 bg-red-500 rounded-full transition-all duration-300 line-2"></span>
+        <span class="w-full h-1 bg-red-500 rounded-full transition-all duration-300 origin-center line-3"></span>
+      </div>
     </button>
   </div>
 
-  <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 p-6 space-y-4 animate-fade-in-down">
-    <a href="#inicio" class="block font-bold text-zinc-800 dark:text-white">Inicio</a>
-    <a href="#productos" class="block font-bold text-zinc-800 dark:text-white">Menú</a>
-    <a href="#nosotros" class="block font-bold text-zinc-800 dark:text-white">Nosotros</a>
-    <a href="#contacto" class="block bg-orange-500 text-white p-3 rounded-xl text-center font-bold">Pedir Ahora</a>
+  <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl border-b border-zinc-200 dark:border-zinc-800 p-8 space-y-6 shadow-2xl origin-top transition-all duration-300 opacity-0 -translate-y-4">
+    <div class="flex flex-col gap-6 text-center">
+      <a href="#inicio" class="nav-link-mobile text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter hover:text-red-500 transition-colors">Inicio</a>
+      <a href="#productos" class="nav-link-mobile text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter hover:text-red-500 transition-colors">Menú</a>
+      <a href="#galeria" class="nav-link-mobile text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter hover:text-red-500 transition-colors">Galería</a>
+      <a href="#ubicacion" class="nav-link-mobile text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter hover:text-red-500 transition-colors">Ubicación</a>
+      <a href="#nosotros" class="nav-link-mobile text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter hover:text-red-500 transition-colors">Nosotros</a>
+      <a href="#contacto" class="nav-link-mobile bg-red-500 text-white p-4 rounded-2xl text-center font-black uppercase tracking-widest shadow-lg shadow-red-500/40 active:scale-95 transition-all">Pedir Ahora</a>
+    </div>
   </div>
 </nav>
+
+<style>
+  /* 1. CLASE PARA BLOQUEAR SCROLL */
+  :global(body.overflow-hidden) {
+    overflow: hidden;
+  }
+
+  /* Animación de la Hamburguesa a X */
+  #menu-btn.is-open .line-1 {
+    transform: translateY(10px) rotate(45deg);
+  }
+  #menu-btn.is-open .line-2 {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  #menu-btn.is-open .line-3 {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+  /* Animación del Menú */
+  #mobile-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
 
 <script>
   const btn = document.getElementById('menu-btn');
   const menu = document.getElementById('mobile-menu');
-  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+  const mobileLinks = document.querySelectorAll('.nav-link-mobile');
+  const body = document.body;
+
+  function toggleMenu() {
+    const isOpen = btn?.classList.toggle('is-open');
+    
+    if (isOpen) {
+      // 2. BLOQUEAR SCROLL
+      body.classList.add('overflow-hidden');
+      menu?.classList.remove('hidden');
+      setTimeout(() => menu?.classList.add('show'), 10);
+    } else {
+      // 3. LIBERAR SCROLL
+      body.classList.remove('overflow-hidden');
+      menu?.classList.remove('show');
+      setTimeout(() => menu?.classList.add('hidden'), 300);
+    }
+  }
+
+  btn?.addEventListener('click', toggleMenu);
+
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (btn?.classList.contains('is-open')) toggleMenu();
+    });
+  });
+
+  // 4. LIMPIADOR PARA PANTALLA COMPLETA (RESIZE)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) { // 768px es el breakpoint 'md' de Tailwind
+      if (btn?.classList.contains('is-open')) {
+        toggleMenu(); // Esto cierra el menú y libera el scroll automáticamente
+      }
+    }
+  });
 </script>
