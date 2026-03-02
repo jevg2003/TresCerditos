@@ -1,26 +1,34 @@
-<section id="inicio" class="relative h-[80vh] min-h-[600px] rounded-[3rem] overflow-hidden shadow-2xl mt-4">
+<section id="inicio" class="relative h-[85vh] md:h-[80vh] min-h-[550px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl mt-4 mx-2 md:mx-0">
   <img 
     src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1200" 
     alt="Lechoneria Tres Cerditos" 
     class="absolute inset-0 w-full h-full object-cover scale-105"
   />
-  <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent flex items-center">
-    <div class="container mx-auto px-12">
-      <div class="max-w-2xl space-y-6">
-        <span class="inline-block bg-red-600 text-white px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest animate-pulse">
-          Tradición en cada bocado [cite: 85]
+  
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 md:bg-gradient-to-r md:from-black/90 md:via-black/40 md:to-transparent flex items-center">
+    
+    <div class="container mx-auto px-6 md:px-12">
+      <div class="max-w-2xl space-y-4 md:space-y-6">
+        
+        <span class="inline-block bg-red-600 text-white px-4 py-1.5 rounded-full text-[10px] md:text-sm font-bold uppercase tracking-widest animate-pulse">
+          Tradición en cada bocado
         </span>
-        <h1 class="text-6xl md:text-8xl font-black text-white leading-[0.9] uppercase italic">
-          Lechoneria <br/> <span class="text-red-600">Tres Cerditos</span>
+
+        <h1 class="text-4xl sm:text-6xl md:text-8xl font-black text-white leading-[0.95] md:leading-[0.9] uppercase italic">
+          Lechoneria <br class="hidden sm:block"/> 
+          <span class="text-red-600">Tres Cerditos</span>
         </h1>
-        <p class="text-gray-300 text-lg md:text-xl font-light max-w-lg">
-          Llevamos el sabor auténtico del Tolima a tu mesa con la receta secreta de la familia. [cite: 86]
+
+        <p class="text-gray-300 text-base md:text-xl font-light max-w-lg leading-relaxed">
+          Llevamos el sabor auténtico del Tolima a tu mesa con la receta secreta de la familia.
         </p>
-        <div class="flex flex-wrap gap-4 pt-4">
-          <a href="#productos" class="bg-white text-black hover:bg-red-600 hover:text-white px-10 py-4 rounded-full font-black transition-all">
-            VER EL MENÚ
+
+        <div class="flex flex-wrap gap-4 pt-2 md:pt-4">
+          <a href="#productos" class="w-full sm:w-auto bg-red-600 text-white md:bg-white md:text-black hover:bg-red-700 md:hover:bg-red-600 md:hover:text-white px-10 py-4 rounded-full font-black text-center transition-all uppercase tracking-tighter md:tracking-normal">
+            Ver el menú
           </a>
         </div>
+
       </div>
     </div>
   </div>
