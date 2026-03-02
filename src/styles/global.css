@@ -1,1 +1,49 @@
 @import "tailwindcss";
+<style is:global>
+  /* 1. ALINEACIÓN TIPO "WORD" (JUSTIFICADO) */
+  p, .text-lg, .text-base, .text-sm {
+    text-align: justify !important;
+    text-justify: inter-word !important; /* Mejora el espaciado entre palabras */
+    hyphens: auto; /* Corta palabras largas con guiones para evitar huecos grandes */
+  }
+
+  /* 2. TÍTULOS SIEMPRE CENTRADOS PARA EQUILIBRAR */
+  h1, h2, h3, h4 {
+    text-align: center !important;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 3. CONTENEDORES DE TEXTO (Visión, Misión, Hero) */
+  /* Forzamos que los bloques de texto se mantengan centrados en el eje */
+  .max-w-2xl, .max-w-lg, .max-w-xl {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 4. AJUSTE PARA MÓVIL (Basado en tus capturas) */
+  @media (max-width: 768px) {
+    /* Evita que el texto toque los bordes físicos de la pantalla */
+    .container, section {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+    }
+
+    /* Reducimos un poco el tamaño para que el justificado no deje huecos feos */
+    h1 {
+      font-size: 2.5rem !important; /* Ajuste para "Lechoneria Tres Cerditos" */
+      line-height: 1.1 !important;
+    }
+  }
+
+  /* 5. SIMETRÍA EN BOTONES DE CONTROL (Galería) */
+  .control-box, #master-pause {
+    justify-content: center !important;
+    text-align: center !important;
+    min-width: 140px; /* Asegura que midan lo mismo */
+  }
+</style>
