@@ -7,43 +7,63 @@ const images = [
 ];
 ---
 
-<section id="galeria" class="py-20 reveal">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="mb-10 text-center md:text-left">
-      <h2 class="text-4xl md:text-6xl font-black uppercase italic text-zinc-900 dark:text-black">Nuestra <span class="text-red-500">Galería</span></h2>
-      <p class="text-zinc-500 font-medium mt-2">Momentos capturados para tu paladar.</p>
+<section id="galeria" class="py-20 reveal bg-white dark:bg-zinc-950 rounded-[3rem] shadow-2xl border border-zinc-200 dark:border-zinc-800">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div class="text-center md:text-left">
+        <h2 class="text-4xl md:text-6xl font-black uppercase italic text-zinc-900 dark:text-white">
+          Nuestra <span class="text-orange-500">Galería</span>
+        </h2>
+        <p class="text-zinc-500 font-medium mt-2">Momentos capturados para tu paladar.</p>
+      </div>
+      
+      <div class="flex items-center justify-center gap-3 bg-zinc-100 dark:bg-zinc-900 px-6 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800">
+        <span id="current-index-display" class="text-2xl font-black text-orange-500 italic">01</span>
+        <div class="w-px h-6 bg-zinc-300 dark:bg-zinc-700"></div>
+        <span class="text-sm font-bold text-zinc-400 uppercase tracking-widest">{images.length.toString().padStart(2, '0')}</span>
+      </div>
     </div>
     
-    <div id="gallery-observer-target" class="relative group aspect-video md:aspect-[21/9] rounded-[2.5rem] overflow-hidden bg-black shadow-2xl border border-zinc-200 dark:border-zinc-800">
+    <div id="gallery-observer-target" class="relative group aspect-video md:aspect-[21/9] rounded-[3rem] overflow-hidden bg-black shadow-2xl border border-zinc-200 dark:border-zinc-800 touch-pan-y">
+      
       <img id="bg-blur" src={images[0].src} class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-30 scale-110" />
+      
       <img 
         id="main-stage" 
         src={images[0].src} 
-        alt="Visualización" 
-        class="relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10"
+        alt="Visualización de galería" 
+        class="relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10 select-none"
       />
-      <div class="absolute bottom-0 left-0 h-1 bg-red-500 z-20 transition-all duration-[4000ms] ease-linear w-0" id="progress-bar"></div>
+
+      <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-between px-8">
+        <button id="prev-btn" class="w-14 h-14 rounded-full bg-white/20 text-white flex items-center justify-center -translate-x-10 group-hover:translate-x-0 transition-all hover:bg-orange-500 active:scale-95">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+
+        <button id="master-pause" class="w-20 h-20 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg active:scale-95 transition-all">
+          <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </button>
+
+        <button id="next-btn" class="w-14 h-14 rounded-full bg-white/20 text-white flex items-center justify-center translate-x-10 group-hover:translate-x-0 transition-all hover:bg-orange-500 active:scale-95">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+
+      <div class="absolute bottom-0 left-0 h-1.5 bg-orange-500 z-20 transition-all duration-[4000ms] ease-linear w-0" id="progress-bar"></div>
     </div>
 
     <div class="mt-8 relative px-2">
-      <div 
-        id="thumb-container"
-        class="flex gap-3 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing"
-      >
+      <div id="thumb-container" class="flex gap-4 overflow-x-auto pb-6 scroll-smooth no-scrollbar snap-x">
         {images.map((img, index) => (
           <button 
-            class="thumb-btn flex-shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden snap-start relative transition-all duration-300 opacity-40 hover:opacity-100"
+            class="thumb-btn flex-shrink-0 w-24 h-24 md:w-36 md:h-24 rounded-[2rem] overflow-hidden snap-center relative transition-all duration-300 opacity-40 hover:opacity-100"
             data-src={img.src}
             data-index={index}
           >
             <img src={img.src} alt={img.alt} class="w-full h-full object-cover" />
-            <div class="absolute inset-0 bg-white/10 pointer-events-none"></div>
           </button>
         ))}
-      </div>
-      
-      <div class="hidden md:block absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-zinc-200 rounded-full overflow-hidden">
-         <div id="scroll-indicator" class="h-full bg-red-500 w-1/4 transition-all duration-300 relative"></div>
       </div>
     </div>
   </div>
@@ -52,13 +72,11 @@ const images = [
 <style>
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-  /* Clase activa manual para evitar errores de Tailwind v4 en el build */
   .is-active {
     opacity: 1 !important;
-    outline: 4px solid #fb2c36;
-    outline-offset: 2px;
-    transform: scale(0.95);
+    outline: 4px solid #f97316;
+    outline-offset: 4px;
+    transform: scale(0.9) translateY(-5px);
   }
 </style>
 
@@ -68,20 +86,32 @@ const images = [
   const bgBlur = document.getElementById('bg-blur') as HTMLImageElement;
   const progressBar = document.getElementById('progress-bar');
   const container = document.getElementById('thumb-container');
-  const gallerySection = document.getElementById('gallery-observer-target');
+  const indexDisplay = document.getElementById('current-index-display');
+  const galleryBox = document.getElementById('gallery-observer-target');
+
+  const masterPause = document.getElementById('master-pause');
+  const pauseIcon = document.getElementById('pause-icon');
+  const playIcon = document.getElementById('play-icon');
   
   let currentIndex = 0;
   let interval: any;
+  let isPaused = false;
   let isVisible = false;
+  let touchStartX = 0;
+  let touchEndX = 0;
 
   function updateGallery(index: number) {
     currentIndex = index;
     const btn = thumbBtns[index];
     const newSrc = btn.getAttribute('data-src');
 
-    // Cambiar Imagen Principal
+    // Actualizar Contador (formato 01, 02...)
+    if (indexDisplay) {
+      indexDisplay.textContent = (index + 1).toString().padStart(2, '0');
+    }
+
     if (mainImg && newSrc) {
-        mainImg.style.opacity = '0.5';
+        mainImg.style.opacity = '0.3';
         setTimeout(() => {
             mainImg.src = newSrc;
             if (bgBlur) bgBlur.src = newSrc;
@@ -89,22 +119,19 @@ const images = [
         }, 150);
     }
 
-    // Actualizar Miniaturas (Clase Manual)
     thumbBtns.forEach(b => b.classList.remove('is-active'));
     btn.classList.add('is-active');
 
-    // Scroll inteligente de miniaturas (Sin saltos de página)
     if (container) {
       const btnElem = btn as HTMLElement;
       const scrollPos = btnElem.offsetLeft - (container.offsetWidth / 2) + (btnElem.offsetWidth / 2);
       container.scrollTo({ left: scrollPos, behavior: 'smooth' });
     }
 
-    // Reiniciar Barra de Progreso
     if (progressBar) {
         progressBar.style.transition = 'none';
         progressBar.style.width = '0%';
-        if (isVisible) {
+        if (isVisible && !isPaused) {
           setTimeout(() => {
               progressBar.style.transition = 'width 4000ms linear';
               progressBar.style.width = '100%';
@@ -113,10 +140,28 @@ const images = [
     }
   }
 
+  // --- SWIPE LOGIC (Móvil) ---
+  galleryBox?.addEventListener('touchstart', (e: any) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  galleryBox?.addEventListener('touchend', (e: any) => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) { // Siguiente
+      currentIndex = (currentIndex + 1) % thumbBtns.length;
+      updateGallery(currentIndex);
+    } else if (touchEndX - touchStartX > 50) { // Anterior
+      currentIndex = (currentIndex - 1 + thumbBtns.length) % thumbBtns.length;
+      updateGallery(currentIndex);
+    }
+  }, { passive: true });
+
+  // --- AUTO PLAY ---
   function startAutoPlay() {
     stopAutoPlay();
+    if (isPaused) return;
     interval = setInterval(() => {
-      if (isVisible) {
+      if (isVisible && !isPaused) {
         currentIndex = (currentIndex + 1) % thumbBtns.length;
         updateGallery(currentIndex);
       }
@@ -127,15 +172,34 @@ const images = [
     if (interval) clearInterval(interval);
   }
 
-  // Interacción manual
-  thumbBtns.forEach((btn, i) => {
-    btn.addEventListener('click', () => {
-      updateGallery(i);
-      startAutoPlay(); 
-    });
+  masterPause?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isPaused = !isPaused;
+    if (isPaused) {
+      stopAutoPlay();
+      pauseIcon?.classList.add('hidden');
+      playIcon?.classList.remove('hidden');
+      if (progressBar) progressBar.style.width = '0%';
+    } else {
+      startAutoPlay();
+      updateGallery(currentIndex);
+      pauseIcon?.classList.remove('hidden');
+      playIcon?.classList.add('hidden');
+    }
   });
 
-  // OPTIMIZACIÓN: Solo funciona si está en pantalla
+  document.getElementById('prev-btn')?.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + thumbBtns.length) % thumbBtns.length;
+    updateGallery(currentIndex);
+  });
+
+  document.getElementById('next-btn')?.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % thumbBtns.length;
+    updateGallery(currentIndex);
+  });
+
+  thumbBtns.forEach((btn, i) => btn.addEventListener('click', () => updateGallery(i)));
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       isVisible = entry.isIntersecting;
@@ -144,19 +208,9 @@ const images = [
         updateGallery(currentIndex);
       } else {
         stopAutoPlay();
-        if (progressBar) progressBar.style.width = '0%';
       }
     });
-  }, { threshold: 0.5 }); // Se activa cuando el 50% de la galería es visible
+  }, { threshold: 0.5 });
 
-  if (gallerySection) observer.observe(gallerySection);
-
-  // Indicador de scroll de barrita
-  container?.addEventListener('scroll', () => {
-    const indicator = document.getElementById('scroll-indicator');
-    if (indicator && container) {
-        const scrollPercent = (container.scrollLeft / (container.scrollWidth - container.clientWidth)) * 100;
-        indicator.style.left = `${scrollPercent}%`;
-    }
-  });
+  if (galleryBox) observer.observe(galleryBox);
 </script>
