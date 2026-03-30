@@ -14,7 +14,7 @@ try {
 const images = files.map(file => ({
   src: `/images/${file}`,
   type: file.endsWith('.mp4') ? 'video' : 'img',
-  alt: file.split('.')[0]
+  alt: `Lechoneria Tres Cerditos Cali - ${file.split('.')[0].replace(/-/g, ' ')}`
 }));
 ---
 
