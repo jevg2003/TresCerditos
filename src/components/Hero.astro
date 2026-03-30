@@ -1,8 +1,15 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/images/imagen-01.png';
+---
 <section id="inicio" class="relative h-screen w-full overflow-hidden">
   <img 
-    src="/images/imagen-01.png" 
-    alt="Lechoneria Tres Cerditos" 
+    src={heroImage.src} 
+    alt="Lechoneria Tres Cerditos Cali" 
     class="absolute inset-0 w-full h-full object-cover scale-105"
+    loading="eager"
+    fetchpriority="high"
+    decoding="sync"
   />
   
   <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 md:bg-gradient-to-r md:from-black/90 md:via-black/40 md:to-transparent flex items-center pt-20 md:pt-32">

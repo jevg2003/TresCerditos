@@ -1,11 +1,20 @@
 ---
+import { Image } from 'astro:assets';
+
+import img05 from '../assets/images/imagen-05.png';
+import img03 from '../assets/images/imagen-03.png';
+import img02 from '../assets/images/imagen-02.png';
+import img40 from '../assets/images/imagen-40.jpeg';
+import img24 from '../assets/images/imagen-24.jpg';
+import img26 from '../assets/images/imagen-26.jpg';
+
 const productos = [
-  { nombre: "Lechona Tradicional", desc: "Nuestra receta auténtica tolimense con arroz seleccionado, jugosa carne de cerdo desmechada y el característico cuero crocante horneado a la perfección.", imagen: "/images/imagen-05.png" },
-  { nombre: "Cojín de Lechona", desc: "El formato ideal para compartir o celebrar eventos especiales. Lechona empacada, lista para dividir en porciones de manera muy práctica.", imagen: "/images/imagen-03.png" },
-  { nombre: "Pernil de Cerdo", desc: "Exquisito pernil de cerdo horneado lentamente en sus propios jugos y finas hierbas, garantizando una carne muy suave, tierna y con mucho sabor a hogar.", imagen: "/images/imagen-02.png" },
-  { nombre: "Papa Rellena", desc: "Una fusión increíble y deliciosa: crujiente masa de papa por fuera, rellena generosamente con nuestra inconfundible lechona de la casa por dentro.", imagen: "/images/imagen-40.jpeg" },
-  { nombre: "Empanada", desc: "Pequeñas delicias con la masa de maíz más crujiente dorada en su punto, conservando todo el sabor auténtico de la lechona en cada bocado rápido.", imagen: "/images/imagen-24.jpg" },
-  { nombre: "Tamal con Lechona", desc: "La combinación perfecta y preferida por muchísimos clientes. Delicioso tamal tolimense acompañado con una generosa porción de nuestra mejor lechona.", imagen: "/images/imagen-26.jpg" },
+  { nombre: "Lechona Tradicional", desc: "Nuestra receta auténtica tolimense con arroz seleccionado, jugosa carne de cerdo desmechada y el característico cuero crocante horneado a la perfección.", imagen: img05 },
+  { nombre: "Cojín de Lechona", desc: "El formato ideal para compartir o celebrar eventos especiales. Lechona empacada, lista para dividir en porciones de manera muy práctica.", imagen: img03 },
+  { nombre: "Pernil de Cerdo", desc: "Exquisito pernil de cerdo horneado lentamente en sus propios jugos y finas hierbas, garantizando una carne muy suave, tierna y con mucho sabor a hogar.", imagen: img02 },
+  { nombre: "Papa Rellena", desc: "Una fusión increíble y deliciosa: crujiente masa de papa por fuera, rellena generosamente con nuestra inconfundible lechona de la casa por dentro.", imagen: img40 },
+  { nombre: "Empanada", desc: "Pequeñas delicias con la masa de maíz más crujiente dorada en su punto, conservando todo el sabor auténtico de la lechona en cada bocado rápido.", imagen: img24 },
+  { nombre: "Tamal con Lechona", desc: "La combinación perfecta y preferida por muchísimos clientes. Delicioso tamal tolimense acompañado con una generosa porción de nuestra mejor lechona.", imagen: img26 },
 ];
 ---
 <section id="productos" class="py-20 reveal">
@@ -14,7 +23,7 @@ const productos = [
     {productos.map(p => (
       <div class="bg-zinc-50 p-3 rounded-[2.5rem] border border-zinc-200 hover:shadow-2xl transition-all group flex flex-col h-full">
         <div class="h-64 bg-zinc-200 rounded-[2rem] overflow-hidden relative shrink-0">
-            <img src={p.imagen} alt={`${p.nombre} - Lechoneria Tres Cerditos Cali`} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /> 
+             <img src={(p.imagen as any).src} alt={`${p.nombre} - Lechoneria Tres Cerditos Cali`} width="600" height="400" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" /> 
         </div>
         <div class="p-6 flex flex-col flex-grow">
           <h3 class="text-2xl font-bold">{p.nombre}</h3>

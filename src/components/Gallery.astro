@@ -1,21 +1,23 @@
 ---
-import fs from 'node:fs';
-import path from 'node:path';
+import { Image } from 'astro:assets';
 
-const publicImagesDir = path.join(process.cwd(), 'public', 'images');
-// Refreshing cache to drop deleted imagen-25.jpg
-let files: string[] = [];
-try {
-  files = fs.readdirSync(publicImagesDir).filter(f => f !== '.DS_Store' && f !== 'Thumbs.db' && f !== 'logo.png');
-} catch (e) {
-  console.error("Error reading images directory", e);
-}
+// Static assets for maximum build stability
+import img1 from '../assets/images/imagen-01.png';
+import img2 from '../assets/images/imagen-02.png';
+import img3 from '../assets/images/imagen-03.png';
+import img4 from '../assets/images/imagen-04.png';
+import img5 from '../assets/images/imagen-05.png';
+import img26 from '../assets/images/imagen-26.jpg';
 
-const images = files.map(file => ({
-  src: `/images/${file}`,
-  type: file.endsWith('.mp4') ? 'video' : 'img',
-  alt: `Lechoneria Tres Cerditos Cali - ${file.split('.')[0].replace(/-/g, ' ')}`
-}));
+const allMedia = [
+  { src: img1, type: 'img' as const, alt: 'Lechoneria Tres Cerditos Cali - Hero' },
+  { src: img2, type: 'img' as const, alt: 'Lechoneria Tres Cerditos Cali - Pernil' },
+  { src: img3, type: 'img' as const, alt: 'Lechoneria Tres Cerditos Cali - Cojin' },
+  { src: img5, type: 'img' as const, alt: 'Lechoneria Tres Cerditos Cali - Tradicional' },
+  { src: '/images/video-36.mp4', type: 'video' as const, alt: 'Preparación de Lechona' },
+  { src: img26, type: 'img' as const, alt: 'Nuestros Productos' },
+  { src: '/images/video-37.mp4', type: 'video' as const, alt: 'Sabor Tradicional' },
+];
 ---
 
 <section id="galeria" class="py-10 md:py-16 bg-white dark:bg-zinc-950 reveal overflow-hidden">
@@ -31,7 +33,7 @@ const images = files.map(file => ({
       
       <div class="flex items-center justify-center md:justify-end gap-3" id="gallery-controls">
         
-        <button id="master-pause" class="control-box active:scale-95 cursor-pointer hover:bg-zinc-200 transition-colors">
+        <button id="master-pause" class="control-box active:scale-95 cursor-pointer hover:bg-zinc-200 transition-colors" aria-label="Alternar pausa o reproducción de la galería automática">
           <div class="relative w-6 h-6 flex items-center justify-center text-red-700">
             <svg id="pause-icon" class="w-6 h-6 text-red-700 font-bold" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -46,35 +48,40 @@ const images = files.map(file => ({
         <div class="control-box font-bold">
           <span id="current-index-display" class="text-2xl font-black text-red-700 italic leading-none">01</span>
           <div class="w-px h-6 bg-zinc-300 dark:bg-zinc-700"></div>
-          <span class="text-sm font-bold text-zinc-400 uppercase tracking-widest leading-none">{images.length.toString().padStart(2, '0')}</span>
+          <span class="text-sm font-bold text-zinc-400 uppercase tracking-widest leading-none">{allMedia.length.toString().padStart(2, '0')}</span>
         </div>
       </div>
     </div>
     
     <div id="gallery-observer-target" class="relative group w-full h-[45vh] md:h-[55vh] max-h-[600px] overflow-hidden bg-black border-y border-zinc-200 dark:border-zinc-800 touch-pan-y">
-      <img id="bg-blur" src={images[0]?.src || ''} class="absolute inset-0 w-full h-full object-cover blur-3xl opacity-40 scale-125 transition-all duration-1000" />
-      
       <!-- IMAGE ELEMENT -->
-      <img 
-        id="main-stage" 
-        src={images[0]?.type === 'img' ? images[0].src : ''} 
-        alt="Visualización de galería" 
-        class={`relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10 hover:scale-105 select-none pointer-events-none ${images[0]?.type === 'img' ? '' : 'hidden'}`}
-      />
+      {allMedia.length > 0 && allMedia[0].type === 'img' && (
+        <img 
+          id="main-stage" 
+          src={(allMedia[0].src as any).src || allMedia[0].src} 
+          alt="Visualización de galería" 
+          class="relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10 hover:scale-105 select-none pointer-events-none"
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
+        />
+      )}
       
       <!-- VIDEO ELEMENT -->
-      <video
-        id="main-video"
-        src={images[0]?.type === 'video' ? images[0].src : ''}
-        class={`relative w-full h-full object-contain z-10 ${images[0]?.type === 'video' ? '' : 'hidden'}`}
-        muted loop playsinline
-      ></video>
+      {allMedia.length > 0 && (
+        <video
+          id="main-video"
+          src={allMedia[0].type === 'video' ? allMedia[0].src : ''}
+          class={`relative w-full h-full object-contain z-10 ${allMedia[0].type === 'video' ? '' : 'hidden'}`}
+          muted loop playsinline
+        ></video>
+      )}
 
       <div class="absolute inset-0 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:flex items-center justify-between px-8 pointer-events-none">
-        <button id="prev-btn" class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center -translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700">
+        <button id="prev-btn" class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center -translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700" aria-label="Ver imagen anterior de la galería">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
         </button>
-        <button id="next-btn" class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700">
+        <button id="next-btn" class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700" aria-label="Ver siguiente imagen de la galería">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
         </button>
       </div>
@@ -88,22 +95,22 @@ const images = files.map(file => ({
       </button>
 
       <div id="thumb-container" class="flex gap-3 md:gap-4 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing w-full px-2 md:px-12">
-        {images.map((img, index) => (
+        {allMedia.map((media, index) => (
           <button 
             class="thumb-btn flex-shrink-0 w-20 h-20 md:w-32 md:h-24 rounded-xl md:rounded-2xl overflow-hidden snap-start relative transition-all duration-300 opacity-40 hover:opacity-100 border-2 border-transparent"
-            data-src={img.src}
-            data-type={img.type}
+            data-src={media.type === 'img' ? (media.src as any).src : media.src}
+            data-type={media.type}
             data-index={index}
           >
-            {img.type === 'video' ? (
+            {media.type === 'video' ? (
               <div class="w-full h-full relative">
-                <video src={img.src} class="w-full h-full object-cover pointer-events-none" preload="metadata" muted />
+                <video src={media.src as string} class="w-full h-full object-cover pointer-events-none" preload="metadata" muted />
                 <div class="absolute inset-0 flex items-center justify-center bg-black/40">
                   <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
                 </div>
               </div>
             ) : (
-              <img src={img.src} alt={img.alt} class="w-full h-full object-cover pointer-events-none" loading="lazy" />
+              <img src={(media.src as any).src} alt={media.alt} width="128" height="96" class="w-full h-full object-cover pointer-events-none" loading="lazy" />
             )}
           </button>
         ))}
@@ -279,18 +286,18 @@ const images = files.map(file => ({
   galleryBox?.addEventListener('touchend', (e: any) => {
     const diff = touchStartX - e.changedTouches[0].screenX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) currentIndex = (currentIndex + 1) % thumbBtns.length;
-      else currentIndex = (currentIndex - 1 + thumbBtns.length) % thumbBtns.length;
+      if (diff > 0) currentIndex = (currentIndex + 1) % allMedia.length;
+      else currentIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
       updateGallery(currentIndex);
     }
   }, { passive: true });
 
   prevBtn?.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + thumbBtns.length) % thumbBtns.length;
+    currentIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
     updateGallery(currentIndex);
   });
   nextBtn?.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % thumbBtns.length;
+    currentIndex = (currentIndex + 1) % allMedia.length;
     updateGallery(currentIndex);
   });
   thumbBtns.forEach((btn, i) => btn.addEventListener('click', () => updateGallery(i)));

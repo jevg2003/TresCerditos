@@ -1,0 +1,74 @@
+﻿[2m17:29:41[22m [34m[vite][39m Re-optimizing dependencies because lockfile has changed
+[2m17:29:41[22m [34m[types][39m Generated [2m120ms[22m
+[2m17:29:41[22m [34m[build][39m output: [34m"static"[39m
+[2m17:29:41[22m [34m[build][39m mode: [34m"static"[39m
+[2m17:29:41[22m [34m[build][39m directory: [34mC:\Trabajos\TresCerditos\dist\[39m
+[2m17:29:41[22m [34m[build][39m Collecting build info...
+[2m17:29:41[22m [34m[build][39m [32mΓ£ô Completed in 134ms.[39m
+[2m17:29:41[22m [34m[build][39m Building static entrypoints...
+[33m[1m17:29:42[22m [WARN] [vite][39m [33m"matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used in "node_modules/.pnpm/astro@6.0.6_jiti@2.6.1_ligh_1af3c83c167e25b342d5e85729425bae/node_modules/astro/dist/assets/utils/index.js".[39m
+[2m17:29:42[22m [34m[vite][39m [32mΓ£ô built in 946ms[39m
+[2m17:29:42[22m [34m[vite][39m [32mΓ£ô built in 41ms[39m
+[2m17:29:42[22m [34m[build][39m Rearranging server assets...
+node.exe : The requested 
+module '@astrojs/internal-h
+elpers/path' does not 
+provide an export named 'co
+llapseDuplicateLeadingSlash
+es'
+At C:\Program 
+Files\nodejs\npx.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (The  
+   requested m...Leading   
+ Slashes':String) [], R    
+emoteException
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+  [1mLocation:[22m
+    [4mC:\Trabajos\TresCer
+ditos\node_modules\.pnpm\as
+tro@6.0.6_jiti@2.6.1_ligh_1
+af3c83c167e25b342d5e8572942
+5bae\node_modules\astro\dis
+t\core\build\default-preren
+derer.js:17:30[24m
+  [1mStack trace:[22m
+[2m    at 
+ModuleJob._instantiate (nod
+e:internal/modules/esm/modu
+le_job:180:21)
+    at async onImport.trace
+Promise.__proto__ (node:int
+ernal/modules/esm/loader:57
+8:26)
+    at async generatePages 
+(file:///C:/Trabajos/TresCe
+rditos/node_modules/.pnpm/a
+stro@6.0.6_jiti@2.6.1_ligh_
+1af3c83c167e25b342d5e857294
+25bae/node_modules/astro/di
+st/core/build/generate.js:6
+0:3)
+    at async 
+Object.buildApp (file:///C:
+/Trabajos/TresCerditos/node
+_modules/.pnpm/vite@7.3.1_j
+iti@2.6.1_lightningcss@1.31
+.1_yaml@2.8.3/node_modules/
+vite/dist/node/chunks/confi
+g.js:33894:5)
+    at async viteBuild (fil
+e:///C:/Trabajos/TresCerdit
+os/node_modules/.pnpm/astro
+@6.0.6_jiti@2.6.1_ligh_1af3
+c83c167e25b342d5e85729425ba
+e/node_modules/astro/dist/c
+ore/build/static-build.js:7
+6:3)[22m
