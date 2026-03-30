@@ -14,11 +14,15 @@ import "../styles/global.css";
 <Layout title="Lechoneria Tres Cerditos">
 	<style is:global>
 		/* 1. CENTRADO EXCLUSIVO DE TEXTOS */
-		/* Solo afectamos al contenido escrito, no a los contenedores */
-		h1, h2, h3, h4, h5, h6, p, span, b, strong {
+		h1, h2, h3, h4, h5, h6, p {
 			text-align: center !important;
-			display: block !important; /* Asegura que el centrado funcione en spans */
+			display: block !important;
 			width: 100% !important;
+		}
+
+		/* No forzamos block en inline-elements para no romper iconos */
+		span, b, strong {
+			text-align: center !important;
 		}
 
 		/* 2. EXCEPCIONES PARA BOTONES Y CONTROLES */
