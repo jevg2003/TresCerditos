@@ -5,7 +5,8 @@ const exteriorPhotos = [
   { src: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000", alt: "Entrada principal" }
 ];
 
-const googleMapsEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.6713!2d-76.5092!3d3.4378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6fba423b5dd%3A0xcbcb3bf0c5f8186a!2sLechonas%20Los%20Tres%20Cerditos!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco";
+// El enlace "embed" (pb) necesitaba el código de lugar (Place ID) exacto para mostrar el globo rojo.
+const googleMapsEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.6713!2d-76.509231!3d3.437878!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6fbc423b5dd%3A0x2bcb3bf0c5f8186a!2sLechonas%20Los%20Tres%20Cerditos!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco";
 ---
 
 <section id="ubicacion" class="py-24 reveal">
@@ -18,7 +19,10 @@ const googleMapsEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3
 
     <div class="grid lg:grid-cols-2 gap-8 items-stretch">
       
-      <div class="h-[400px] lg:h-full min-h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800 relative">
+      <div class="h-[400px] lg:h-full min-h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800 relative group">
+        <a href="https://www.google.com/maps/place/Lechonas+Los+Tres+Cerditos/@3.437769,-76.5100788,19.59z/data=!4m7!3m6!1s0x8e30a6fbc423b5dd:0x2bcb3bf0c5f8186a!8m2!3d3.437878!4d-76.509231!10e1!16s%2Fg%2F11pzyqpfq5?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="absolute inset-0 z-20 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
+          <span class="bg-red-600 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:scale-105 transition-transform">Abrir en Google Maps</span>
+        </a>
         <iframe
           src={googleMapsEmbed}
           width="100%"
@@ -27,34 +31,40 @@ const googleMapsEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          class="grayscale hover:grayscale-0 transition-all duration-700"
+          class="grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10"
         ></iframe>
-        <div class="absolute bottom-6 left-6 right-6 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md p-4 rounded-2xl shadow-xl">
-           <p class="text-sm font-bold text-red-600 dark:text-red-500">📍 Cra. 23 #33Ebis-111</p>
+        <div class="absolute bottom-6 left-6 right-6 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md p-4 rounded-2xl shadow-xl z-30 pointer-events-none">
+           <p class="text-sm font-bold text-red-600 dark:text-red-500 flex items-center gap-2 w-fit mx-auto">
+             <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+             <span>Cra. 23 #33Ebis-111</span>
+           </p>
            <p class="text-xs text-zinc-500">Comuna 8, Cali, Valle del Cauca</p>
         </div>
       </div>
 
-      <div class="space-y-6">
-        <div class="grid grid-cols-1 gap-6 h-full">
-          {exteriorPhotos.map((photo, index) => (
-            <div class={`relative rounded-[2.5rem] overflow-hidden group shadow-lg ${index === 0 ? 'h-64' : 'h-48'}`}>
-              <img 
-                src={photo.src} 
-                alt={photo.alt} 
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
-                <span class="text-white font-bold uppercase tracking-widest text-sm">Nuestro Local</span>
-              </div>
-            </div>
-          ))}
+      <div class="space-y-6 h-full flex flex-col justify-center">
+        <div class="bg-red-600 p-8 md:p-12 rounded-[2.5rem] text-white flex flex-col justify-center h-full shadow-2xl border-4 border-red-500">
+          <h3 class="text-3xl font-black uppercase mb-8 italic">Horario de Atención</h3>
           
-          <div class="bg-red-600 p-8 rounded-[2.5rem] text-zinc-900 flex flex-col justify-center">
-            <h3 class="text-2xl font-black uppercase mb-4 italic">Horario de Atención</h3>
-            <div class="space-y-2 font-bold">
-              <p class="flex justify-between border-b border-black/10 pb-1"><span>Lun - Sáb:</span> <span>8:00 AM - 6:00 PM</span></p>
-              <p class="flex justify-between"><span>Dom - Fes:</span> <span>9:00 AM - 2:00 PM</span></p>
+          <div class="space-y-6 font-medium text-lg">
+            <div class="bg-white/10 p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition-colors">
+              <p class="font-black text-xl mb-2 text-white uppercase tracking-wider flex items-center justify-center md:justify-start gap-2">
+                <svg class="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                <span>Sábado, Domingo y Festivos</span>
+              </p>
+              <p class="text-white/90 leading-relaxed">A partir de las <strong>10:00 AM</strong> hasta acabar unidades. <br/>¡Hay disponibilidad garantizada!</p>
+            </div>
+
+            <div class="bg-white/10 p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition-colors">
+              <p class="font-black text-xl mb-2 text-white uppercase tracking-wider flex items-center justify-center md:justify-start gap-2">
+                <svg class="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                <span>Lunes a Viernes</span>
+              </p>
+              <p class="text-white/90 leading-relaxed max-w-sm">Por favor llamar para preguntar si hay lechona disponible.</p>
+              <a href="tel:+573042095940" class="mt-5 inline-flex items-center gap-3 bg-white text-red-600 px-6 py-3 rounded-full font-bold hover:bg-zinc-100 hover:scale-105 active:scale-95 transition-all shadow-lg text-sm md:text-base">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                Llamar: 304 209 5940
+              </a>
             </div>
           </div>
         </div>
