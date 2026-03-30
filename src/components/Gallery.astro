@@ -1,23 +1,37 @@
 ---
-import { Image } from 'astro:assets';
+import fs from 'node:fs';
+import path from 'node:path';
 
-// Static assets for maximum build stability
-import img1 from '../assets/images/imagen-01.png';
-import img2 from '../assets/images/imagen-02.png';
-import img3 from '../assets/images/imagen-03.png';
-import img4 from '../assets/images/imagen-04.png';
-import img5 from '../assets/images/imagen-05.png';
-import img26 from '../assets/images/imagen-26.jpg';
+// Get all optimized images from src/assets/images
+const imageImports = import.meta.glob<{ default: ImageMetadata }>('../assets/images/*.{jpeg,jpg,png,webp}', { eager: true });
 
-const allMedia = [
-  { src: img1, type: 'img' as const, alt: 'Lechoneria Tres Cerditos Cali - Hero' },
-  { src: img2, type: 'img' as const, alt: 'Lechoneria Tres Cerditos Cali - Pernil' },
-  { src: img3, type: 'img' as const, alt: 'Lechoneria Tres Cerditos Cali - Cojin' },
-  { src: img5, type: 'img' as const, alt: 'Lechoneria Tres Cerditos Cali - Tradicional' },
-  { src: '/images/video-36.mp4', type: 'video' as const, alt: 'Preparación de Lechona' },
-  { src: img26, type: 'img' as const, alt: 'Nuestros Productos' },
-  { src: '/images/video-37.mp4', type: 'video' as const, alt: 'Sabor Tradicional' },
-];
+// Get all videos from public/images
+const publicImagesDir = path.join(process.cwd(), 'public', 'images');
+let videoFiles: string[] = [];
+try {
+  videoFiles = fs.readdirSync(publicImagesDir).filter(f => f.endsWith('.mp4'));
+} catch (e) {
+  console.error("Error reading videos directory", e);
+}
+
+const images = Object.entries(imageImports)
+  .filter(([path]) => !path.includes('logo'))
+  .map(([path, module]) => {
+    const fileName = path.split('/').pop()?.split('.')[0] || '';
+    return {
+      src: (module as any).default as ImageMetadata,
+      type: 'img' as const,
+      alt: `Lechoneria Tres Cerditos Cali - ${fileName.replace(/-/g, ' ')}`
+    };
+  });
+
+const videos = videoFiles.map(file => ({
+  src: `/images/${file}`,
+  type: 'video' as const,
+  alt: `Video - ${file.split('.')[0]}`
+}));
+
+const allMedia = [...images, ...videos];
 ---
 
 <section id="galeria" class="py-10 md:py-16 bg-white dark:bg-zinc-950 reveal overflow-hidden">
