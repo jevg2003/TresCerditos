@@ -31,7 +31,15 @@ const videos = videoFiles.map(file => ({
   alt: `Video - ${file.split('.')[0]}`
 }));
 
-const allMedia = [...images, ...videos];
+const allMedia = [...images, ...videos].sort((a, b) => {
+  const getNumber = (src: string) => {
+    const match = src.match(/(?:imagen|video)-(\d+)/);
+    return match ? parseInt(match[1]) : 999;
+  };
+  const aStr = typeof a.src === 'string' ? a.src : (a.src as any).src;
+  const bStr = typeof b.src === 'string' ? b.src : (b.src as any).src;
+  return getNumber(aStr) - getNumber(bStr);
+});
 ---
 
 <section id="galeria" class="py-10 md:py-16 bg-white dark:bg-zinc-950 reveal overflow-hidden">
