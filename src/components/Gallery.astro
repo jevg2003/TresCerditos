@@ -6,10 +6,13 @@ import path from 'node:path';
 const imageImports = import.meta.glob<{ default: ImageMetadata }>('../assets/images/*.{jpeg,jpg,png,webp}', { eager: true });
 
 // Get all videos from public/images
-const publicImagesDir = path.join(process.cwd(), 'public', 'images');
 let videoFiles: string[] = [];
 try {
-  videoFiles = fs.readdirSync(publicImagesDir).filter(f => f.endsWith('.mp4'));
+  // Using relative path from src/components to public/images
+  const publicDir = path.resolve('./public/images');
+  if (fs.existsSync(publicDir)) {
+    videoFiles = fs.readdirSync(publicDir).filter(f => f.endsWith('.mp4'));
+  }
 } catch (e) {
   console.error("Error reading videos directory", e);
 }
@@ -75,14 +78,15 @@ const allMedia = [...images, ...videos].sort((a, b) => {
       </div>
     </div>
     
-    <div id="gallery-observer-target" class="relative group w-full h-[45vh] md:h-[55vh] max-h-[600px] overflow-hidden bg-black border-y border-zinc-200 dark:border-zinc-800 touch-pan-y">
+    <div id="gallery-observer-target" class="relative group w-full h-[45vh] md:h-[55vh] max-h-[600px] overflow-hidden bg-black border-y border-zinc-200 dark:border-zinc-800 touch-pan-y cursor-grab active:cursor-grabbing">
       <!-- IMAGE ELEMENT -->
       {allMedia.length > 0 && allMedia[0].type === 'img' && (
         <img 
           id="main-stage" 
           src={(allMedia[0].src as any).src || allMedia[0].src} 
           alt="Visualización de galería" 
-          class="relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10 hover:scale-105 select-none pointer-events-none"
+          draggable="false"
+          class="relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10 hover:scale-105 select-none"
           loading="eager"
           decoding="sync"
           fetchpriority="high"
@@ -111,15 +115,12 @@ const allMedia = [...images, ...videos].sort((a, b) => {
       <div class="absolute bottom-0 left-0 h-1.5 bg-red-700 z-40 transition-all duration-[4000ms] ease-linear w-0" id="progress-bar"></div>
     </div>
 
-    <div class="mt-12 relative px-6 md:px-12 group/thumbs flex items-center">
-      <button id="thumb-prev-scroll" aria-label="Anterior imagen" class="pointer-events-none group-hover/thumbs:pointer-events-auto hidden md:flex absolute left-0 z-10 w-12 h-12 items-center justify-center bg-white dark:bg-zinc-900 rounded-full shadow-lg border border-zinc-200 dark:border-zinc-800 hover:scale-110 transition-all opacity-0 group-hover/thumbs:opacity-100 text-zinc-800 dark:text-zinc-200 hover:text-red-600 dark:hover:text-red-500 disabled:opacity-0">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
-      </button>
-
-      <div id="thumb-container" class="flex gap-3 md:gap-4 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing w-full px-2 md:px-12">
+    <div class="mt-6 md:mt-12 relative w-full group/thumbs flex items-center justify-center">
+      
+      <div id="thumb-container" class="grid grid-rows-2 grid-flow-col md:flex md:flex-row md:justify-start gap-2 sm:gap-3 md:gap-4 overflow-x-auto overflow-y-hidden pb-4 pt-2 px-6 md:px-12 w-full custom-scrollbar relative z-0" style="-webkit-overflow-scrolling: touch;">
         {allMedia.map((media, index) => (
           <button 
-            class="thumb-btn flex-shrink-0 w-20 h-20 md:w-32 md:h-24 rounded-xl md:rounded-2xl overflow-hidden snap-start relative transition-all duration-300 opacity-40 hover:opacity-100 border-2 border-transparent"
+            class="thumb-btn flex-shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-36 md:h-24 rounded-[14px] md:rounded-2xl overflow-hidden relative transition-all duration-300 opacity-60 hover:opacity-100 border-2 border-transparent outline-none bg-zinc-100 dark:bg-zinc-900"
             data-src={media.type === 'img' ? (media.src as any).src : media.src}
             data-type={media.type}
             data-index={index}
@@ -128,7 +129,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
               <div class="w-full h-full relative">
                 <video src={media.src as string} class="w-full h-full object-cover pointer-events-none" preload="metadata" muted />
                 <div class="absolute inset-0 flex items-center justify-center bg-black/40">
-                  <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
+                  <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
                 </div>
               </div>
             ) : (
@@ -138,9 +139,6 @@ const allMedia = [...images, ...videos].sort((a, b) => {
         ))}
       </div>
 
-      <button id="thumb-next-scroll" aria-label="Siguiente imagen" class="pointer-events-none group-hover/thumbs:pointer-events-auto hidden md:flex absolute right-0 z-10 w-12 h-12 items-center justify-center bg-white dark:bg-zinc-900 rounded-full shadow-lg border border-zinc-200 dark:border-zinc-800 hover:scale-110 transition-all opacity-0 group-hover/thumbs:opacity-100 text-zinc-800 dark:text-zinc-200 hover:text-red-600 dark:hover:text-red-500 disabled:opacity-0">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
-      </button>
     </div>
   </div>
 </section>
@@ -163,14 +161,20 @@ const allMedia = [...images, ...videos].sort((a, b) => {
     border-color: var(--color-zinc-800);
   }
 
+  .custom-scrollbar::-webkit-scrollbar { height: 6px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #dc2626; border-radius: 10px; }
+  :global(.dark) .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #dc2626; }
+  
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   
   .thumb-btn.is-active {
     opacity: 1 !important;
-    border-color: var(--color-red-700);
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
+    border-color: var(--color-red-600);
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.4);
+    z-index: 10;
   }
 </style>
 
@@ -212,7 +216,8 @@ const allMedia = [...images, ...videos].sort((a, b) => {
   container?.addEventListener('touchstart', setInteracting, { passive: true });
   container?.addEventListener('wheel', setInteracting, { passive: true });
 
-  function updateGallery(index: number) {
+  function updateGallery(index: number, isManual = false, isInit = false) {
+    if (isManual) setInteracting();
     currentIndex = index;
     const btn = thumbBtns[index];
     if(!btn) return;
@@ -241,27 +246,41 @@ const allMedia = [...images, ...videos].sort((a, b) => {
       if (mainVideo) mainVideo.classList.add('hidden');
       if (mainImg && newSrc) {
         mainImg.classList.remove('hidden');
-        mainImg.style.opacity = '0.5';
-        setTimeout(() => {
-          mainImg.src = newSrc;
-          if (bgBlur) {
-            bgBlur.src = newSrc;
-            bgBlur.style.opacity = '0.4';
-          }
-          mainImg.style.opacity = '1';
-        }, 150);
+        // Pre-cambiar SRC sin timeout para instantaneidad
+        mainImg.src = newSrc;
+        if (bgBlur) {
+          bgBlur.src = newSrc;
+          bgBlur.style.opacity = '0.4';
+        }
       }
     }
 
     thumbBtns.forEach(b => b.classList.remove('is-active'));
     btn.classList.add('is-active');
 
+    // Reemplazo de scrollIntoView para evitar que el navegador mueva TODA la web
+    if (container && !isUserInteracting && !isInit) {
+      const btnEl = btn as HTMLElement;
+      const scrollPos = btnEl.offsetLeft - container.offsetWidth / 2 + btnEl.offsetWidth / 2;
+      container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+    }
+
+    // Precarga inteligente por JS (prevé warnings)
+    const preloadIdxs = [(index + 1) % thumbBtns.length, (index - 1 + thumbBtns.length) % thumbBtns.length];
+    preloadIdxs.forEach(idx => {
+      const pBtn = thumbBtns[idx];
+      if (pBtn && pBtn.getAttribute('data-type') === 'img') {
+        const url = pBtn.getAttribute('data-src');
+        if (url) new Image().src = url;
+      }
+    });
+
     if (progressBar) {
         progressBar.style.transition = 'none';
         progressBar.style.width = '0%';
         if (!isPaused && isVisible) {
           setTimeout(() => {
-              progressBar.style.transition = 'width 4000ms linear';
+              progressBar.style.transition = 'width 6000ms linear';
               progressBar.style.width = '100%';
           }, 50);
         }
@@ -276,7 +295,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
         currentIndex = (currentIndex + 1) % thumbBtns.length;
         updateGallery(currentIndex);
       }
-    }, 4000);
+    }, 6000);
   }
 
   function stopAutoPlay() {
@@ -308,21 +327,21 @@ const allMedia = [...images, ...videos].sort((a, b) => {
   galleryBox?.addEventListener('touchend', (e: any) => {
     const diff = touchStartX - e.changedTouches[0].screenX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) currentIndex = (currentIndex + 1) % allMedia.length;
-      else currentIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
+      if (diff > 0) currentIndex = (currentIndex + 1) % thumbBtns.length;
+      else currentIndex = (currentIndex - 1 + thumbBtns.length) % thumbBtns.length;
       updateGallery(currentIndex);
     }
   }, { passive: true });
 
   prevBtn?.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
-    updateGallery(currentIndex);
+    currentIndex = (currentIndex - 1 + thumbBtns.length) % thumbBtns.length;
+    updateGallery(currentIndex, true);
   });
   nextBtn?.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % allMedia.length;
-    updateGallery(currentIndex);
+    currentIndex = (currentIndex + 1) % thumbBtns.length;
+    updateGallery(currentIndex, true);
   });
-  thumbBtns.forEach((btn, i) => btn.addEventListener('click', () => updateGallery(i)));
+  thumbBtns.forEach((btn, i) => btn.addEventListener('click', () => updateGallery(i, true)));
 
   // Control over visibility for video playback and autoplay
   const observer = new IntersectionObserver((entries) => {
@@ -330,32 +349,23 @@ const allMedia = [...images, ...videos].sort((a, b) => {
       isVisible = entry.isIntersecting;
       if (isVisible) {
         if (!isPaused) {
-          startAutoPlay();
-          if (mainVideo && !mainVideo.classList.contains('hidden')) {
-             mainVideo.play().catch(e=>console.log(e));
-          }
+          // Re-sincronizar timer y barra roja al volver a la pantalla
+          updateGallery(currentIndex, false, true);
         }
       } else {
         stopAutoPlay();
         if (mainVideo) mainVideo.pause();
+        // Detener físicamente la barra roja para que no siga cargando de forma fantasma
+        if (progressBar) {
+          progressBar.style.transition = 'none';
+          progressBar.style.width = '0%';
+        }
       }
     });
-  }, { threshold: 0.1 }); // Trigger pause early when scrolling away
+  }, { threshold: 0.3 }); // Pausar rigurosamente cuando se scrollea fuera (30% visibilidad)
 
   if (galleryBox) observer.observe(galleryBox);
 
-  // Manual scroll buttons for thumbnails
-  const thumbPrevScroll = document.getElementById('thumb-prev-scroll');
-  const thumbNextScroll = document.getElementById('thumb-next-scroll');
-  
-  thumbPrevScroll?.addEventListener('click', () => {
-    container?.scrollBy({ left: -300, behavior: 'smooth' });
-  });
-  
-  thumbNextScroll?.addEventListener('click', () => {
-    container?.scrollBy({ left: 300, behavior: 'smooth' });
-  });
-  
-  // Initialize
-  setTimeout(() => updateGallery(0), 100);
+  // Initialize sin scroll inicial
+  setTimeout(() => updateGallery(0, false, true), 100);
 </script>
