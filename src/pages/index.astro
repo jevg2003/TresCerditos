@@ -1,74 +1,85 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import Products from '../components/Products.astro';
-import Gallery from '../components/Gallery.astro';
-import Mission from '../components/Mission.astro';
-import Footer from '../components/Footer.astro';
-import ContactFab from '../components/ContactFab.astro';
-import Location from '../components/Location.astro';
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import Products from "../components/Products.astro";
+import Gallery from "../components/Gallery.astro";
+import Mission from "../components/Mission.astro";
+import Footer from "../components/Footer.astro";
+import ContactFab from "../components/ContactFab.astro";
+import Location from "../components/Location.astro";
 import "../styles/global.css";
 ---
 
-<Layout title="Lechoneria Tres Cerditos">
-	<style is:global>
-		/* 1. CENTRADO EXCLUSIVO DE TEXTOS */
-		h1, h2, h3, h4, h5, h6, p {
-			text-align: center !important;
-			display: block !important;
-			width: 100% !important;
-		}
+<Layout title="Lechoneria Los Tres Cerditos">
+  <style is:global>
+    /* 1. CENTRADO EXCLUSIVO DE TEXTOS */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      text-align: center !important;
+      display: block !important;
+      width: 100% !important;
+    }
 
-		/* No forzamos block en inline-elements para no romper iconos */
-		span, b, strong {
-			text-align: center !important;
-		}
+    /* No forzamos block en inline-elements para no romper iconos */
+    span,
+    b,
+    strong {
+      text-align: center !important;
+    }
 
-		/* 2. EXCEPCIONES PARA BOTONES Y CONTROLES */
-		/* Evitamos que el 'display: block' de arriba rompa los iconos dentro de botones */
-		button span, a span, .control-box span {
-			display: inline !important; 
-			width: auto !important;
-		}
+    /* 2. EXCEPCIONES PARA BOTONES Y CONTROLES */
+    /* Evitamos que el 'display: block' de arriba rompa los iconos dentro de botones */
+    button span,
+    a span,
+    .control-box span {
+      display: inline !important;
+      width: auto !important;
+    }
 
-		/* 3. AJUSTE DE TAMAÑO PARA EL HERO EN MÓVIL */
-		/* Esto es solo para que "Lechoneria Tres Cerditos" quepa en la pantalla */
-		@media (max-width: 768px) {
-			#inicio h1 {
-			font-size: 2.8rem !important; /* Ajuste manual para que no se desborde */
-			line-height: 1.1 !important;
-			padding: 0 10px !important;
-			}
-			
-			/* Centramos los grupos de botones sin cambiar su forma */
-			.flex-wrap, .flex {
-			justify-content: center !important;
-			}
-		}
+    /* 3. AJUSTE DE TAMAÑO PARA EL HERO EN MÓVIL */
+    /* Esto es solo para que "Lechoneria Los Tres Cerditos" quepa en la pantalla */
+    @media (max-width: 768px) {
+      #inicio h1 {
+        font-size: 2.8rem !important; /* Ajuste manual para que no se desborde */
+        line-height: 1.1 !important;
+        padding: 0 10px !important;
+      }
 
-		/* 4. LIMPIEZA DE MÁRGENES EN PÁRRAFOS */
-		/* Para que el centrado sea perfecto, eliminamos alineaciones extra */
-		p {
-			margin-left: auto !important;
-			margin-right: auto !important;
-			max-width: 100% !important;
-		}
-		</style>
-	<Navbar />
-	
-	<main class="w-full space-y-20 pt-0">
-		<Hero />
-		<div class="px-4 md:px-8 max-w-7xl mx-auto space-y-32">
-			<Products />
-			<Mission />
-		</div>
-		<Gallery /> 
-		<div class="px-4 md:px-8 max-w-7xl mx-auto space-y-32">
-			<Location />
-		</div>
-	</main>
+      /* Centramos los grupos de botones sin cambiar su forma */
+      .flex-wrap,
+      .flex {
+        justify-content: center !important;
+      }
+    }
 
-	<Footer />
-	<ContactFab />
+    /* 4. LIMPIEZA DE MÁRGENES EN PÁRRAFOS */
+    /* Para que el centrado sea perfecto, eliminamos alineaciones extra */
+    p {
+      margin-left: auto !important;
+      margin-right: auto !important;
+      max-width: 100% !important;
+    }
+  </style>
+  <Navbar />
+
+  <main class="w-full space-y-20 pt-0">
+    <Hero />
+    <div class="px-4 md:px-8 max-w-7xl mx-auto space-y-32">
+      <Products />
+      <Mission />
+    </div>
+    <Gallery />
+    <div class="px-4 md:px-8 max-w-7xl mx-auto space-y-32">
+      <Location />
+    </div>
+  </main>
+
+  <Footer />
+  <ContactFab />
 </Layout>

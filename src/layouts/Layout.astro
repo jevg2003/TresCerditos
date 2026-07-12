@@ -1,114 +1,138 @@
 ---
 // Analytics removed temporarily to debug build
 ---
+
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/webp" href="/favicon.webp" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="theme-color" content="#dc2626" />
-		<link rel="apple-touch-icon" href="/favicon.webp" />
-		<title>Lechoneria Tres Cerditos| Lechonas en Cali | Las Mejores de la ciudad de Cali</title>
-		<meta name="description" content="Descubre por qué somos las mejores lechonas de Cali. Sabor 100% tradicional tolimense, cuero extra crocante y pedidos a domicilio en toda la ciudad. ¡Llámanos ya!" />
-		<meta name="keywords" content="lechonas en cali, lechoneria tres cerditos, mejores lechonas cali, lechona a domicilio cali, lechoneria comuna 8" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/webp" href="/favicon.webp" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#dc2626" />
+    <link rel="apple-touch-icon" href="/favicon.webp" />
+    <title>
+      Lechoneria Los Tres Cerditos| Lechonas en Cali | Las Mejores de la ciudad
+      de Cali
+    </title>
+    <meta
+      name="description"
+      content="Descubre por qué somos las mejores lechonas de Cali. Sabor 100% tradicional tolimense, cuero extra crocante y pedidos a domicilio en toda la ciudad. ¡Llámanos ya!"
+    />
+    <meta
+      name="keywords"
+      content="lechonas en cali, Lechoneria Los Tres Cerditos, mejores lechonas cali, lechona a domicilio cali, lechoneria comuna 8"
+    />
 
-		<link rel="canonical" href="https://lechonatrescerditos.com/" />
+    <link rel="canonical" href="https://lechonatrescerditos.com/" />
 
-		<meta property="og:title" content="Lechoneria Tres Cerditos - Las Mejores Lechonas en Cali" />
-		<meta property="og:description" content="Tradición familiar y sabor auténtico tolimense en Cali. Cuero extra crocante y pedidos a domicilio. ¡Llámanos y lleva la mejor lechona a tu mesa!" />
-		<meta property="og:image" content="https://lechonatrescerditos.com/og-image.webp" />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://lechonatrescerditos.com" />
+    <meta
+      property="og:title"
+      content="Lechoneria Los Tres Cerditos - Las Mejores Lechonas en Cali"
+    />
+    <meta
+      property="og:description"
+      content="Tradición familiar y sabor auténtico tolimense en Cali. Cuero extra crocante y pedidos a domicilio. ¡Llámanos y lleva la mejor lechona a tu mesa!"
+    />
+    <meta
+      property="og:image"
+      content="https://lechonatrescerditos.com/og-image.webp"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lechonatrescerditos.com" />
 
-		<script type="application/ld+json">
-		{
-		"@context": "https://schema.org",
-		"@type": "LocalBusiness",
-		"name": "Lechoneria Tres Cerditos",
-		"image": "https://lechonatrescerditos.com/favicon.webp",
-		"description": "Lechonería tradicional tolimense en Cali con la receta secreta de la familia.",
-		"address": {
-			"@type": "PostalAddress",
-			"streetAddress": "Cra. 23 #33Ebis-111",
-			"addressLocality": "Cali",
-			"addressRegion": "Valle del Cauca",
-			"postalCode": "760010",
-			"addressCountry": "CO"
-		},
-		"geo": {
-			"@type": "GeoCoordinates",
-			"latitude": 3.437878,
-			"longitude": -76.509231
-		},
-		"url": "https://lechonatrescerditos.com",
-		"telephone": "+573137086162",
-		"openingHoursSpecification": [
-			{
-				"@type": "OpeningHoursSpecification",
-				"dayOfWeek": ["Saturday", "Sunday", "PublicHoliday"],
-				"opens": "10:00",
-				"closes": "18:00"
-			}
-		],
-		"priceRange": "$$",
-		"servesCuisine": "Tradicional Colombiana"
-		}
-		</script>
-	</head>
-	<body>
-		<slot />
-	</body>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Lechoneria Los Tres Cerditos",
+        "image": "https://lechonatrescerditos.com/favicon.webp",
+        "description": "Lechonería tradicional tolimense en Cali con la receta secreta de la familia.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Cra. 23 #33Ebis-111",
+          "addressLocality": "Cali",
+          "addressRegion": "Valle del Cauca",
+          "postalCode": "760010",
+          "addressCountry": "CO"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 3.437878,
+          "longitude": -76.509231
+        },
+        "url": "https://lechonatrescerditos.com",
+        "telephone": "+573137086162",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday", "Sunday", "PublicHoliday"],
+            "opens": "10:00",
+            "closes": "18:00"
+          }
+        ],
+        "priceRange": "$$",
+        "servesCuisine": "Tradicional Colombiana"
+      }
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 
 <style is:global>
-	html, body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		background-color: #ffffff;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+  }
 
-	html {
-		scroll-behavior: smooth; /* */
-	}
+  html {
+    scroll-behavior: smooth; /* */
+  }
 
-	/* Scrollbar Minimalista */
-	::-webkit-scrollbar { width: 8px; }
-	::-webkit-scrollbar-track { background: #18181b; }
-	::-webkit-scrollbar-thumb {
-		background: #fb2c36;
-		border-radius: 10px;
-	}
+  /* Scrollbar Minimalista */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #18181b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #fb2c36;
+    border-radius: 10px;
+  }
 
-	/* Animaciones de Entrada (Scroll Reveal) */
-	.reveal {
-		opacity: 0;
-		transform: translateY(30px);
-		transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-	}
+  /* Animaciones de Entrada (Scroll Reveal) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-	.reveal.active {
-		opacity: 1;
-		transform: translateY(0);
-	}
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
 
 <script>
-	// Script para activar animaciones al hacer scroll
-	const reveal = () => {
-		const reveals = document.querySelectorAll(".reveal");
-		reveals.forEach(el => {
-			const windowHeight = window.innerHeight;
-			const elementTop = el.getBoundingClientRect().top;
-			if (elementTop < windowHeight - 100) {
-				el.classList.add("active");
-			}
-		});
-	}
-	window.addEventListener("scroll", reveal);
-	window.addEventListener("load", reveal);
+  // Script para activar animaciones al hacer scroll
+  const reveal = () => {
+    const reveals = document.querySelectorAll(".reveal");
+    reveals.forEach((el) => {
+      const windowHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top;
+      if (elementTop < windowHeight - 100) {
+        el.classList.add("active");
+      }
+    });
+  };
+  window.addEventListener("scroll", reveal);
+  window.addEventListener("load", reveal);
 </script>
