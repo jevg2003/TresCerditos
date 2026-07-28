@@ -1,1 +1,71 @@
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/inter";
 @import "tailwindcss";
+
+@theme {
+  /* Brand — one red, three roles. Replaces the six ad-hoc reds. */
+  --color-brand-500: oklch(0.637 0.237 25.331);
+  --color-brand-600: oklch(0.577 0.245 27.325);
+  --color-brand-700: oklch(0.505 0.213 27.518);
+
+  /* Ink — text. Warmer than zinc; reads as food, not SaaS. */
+  --color-ink-900: oklch(0.216 0.006 56.043);
+  --color-ink-700: oklch(0.374 0.010 67.558);
+  --color-ink-500: oklch(0.553 0.013 58.071);
+  --color-ink-300: oklch(0.869 0.005 56.366);
+
+  /* Surface */
+  --color-surface-0: oklch(1 0 0);
+  --color-surface-50: oklch(0.985 0.001 106.423);
+  --color-surface-950: oklch(0.147 0.004 49.25);
+
+  /* Radius — a scale, not one 3rem value used everywhere. */
+  --radius-card: 1.25rem;
+  --radius-panel: 2rem;
+  --radius-pill: 9999px;
+
+  /* Type */
+  --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  --font-body: "Inter Variable", system-ui, sans-serif;
+
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--color-ink-700);
+    background-color: var(--color-surface-0);
+    text-wrap: pretty;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-ink-900);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brand-600);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  .scrollbar-brand::-webkit-scrollbar { height: 6px; width: 8px; }
+  .scrollbar-brand::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-brand::-webkit-scrollbar-thumb {
+    background-color: var(--color-brand-600);
+    border-radius: var(--radius-pill);
+  }
+}
