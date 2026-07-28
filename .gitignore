@@ -22,3 +22,13 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local Claude Code settings (per-developer)
+.claude/settings.local.json
+.tokensave
+
+# scratch / debug artifacts
+build_*.txt
+temp_images/
+debug_*.mjs
+test_*.mjs
