@@ -140,13 +140,20 @@ const allMedia = [...images, ...videos].sort((a, b) => {
     >
       <!-- IMAGE ELEMENT -->
       {
-        allMedia.length > 0 && allMedia[0].type === "img" && (
+        allMedia.length > 0 && (
           <img
             id="main-stage"
-            src={(allMedia[0].src as any).src || allMedia[0].src}
-            alt="Visualización de galería"
+            src={
+              allMedia[0].type === "img"
+                ? (allMedia[0].src as any).src
+                : ""
+            }
+            alt=""
             draggable="false"
-            class="relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10 hover:scale-105 select-none"
+            class:list={[
+              "relative w-full h-full object-contain transition-all duration-700 ease-in-out z-10 hover:scale-105 select-none",
+              allMedia[0].type === "video" && "hidden",
+            ]}
             loading="eager"
             decoding="sync"
             fetchpriority="high"
@@ -210,7 +217,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
       </div>
 
       <div
-        class="absolute bottom-0 left-0 h-1.5 bg-red-700 z-40 transition-all duration-[4000ms] ease-linear w-0"
+        class="absolute bottom-0 left-0 h-1.5 bg-red-700 z-40 transition-all ease-linear w-0"
         id="progress-bar"
       >
       </div>
@@ -315,7 +322,6 @@ const allMedia = [...images, ...videos].sort((a, b) => {
   const thumbBtns = document.querySelectorAll(".thumb-btn");
   const mainImg = document.getElementById("main-stage") as HTMLImageElement;
   const mainVideo = document.getElementById("main-video") as HTMLVideoElement;
-  const bgBlur = document.getElementById("bg-blur") as HTMLImageElement;
   const progressBar = document.getElementById("progress-bar");
   const container = document.getElementById("thumb-container");
   const indexDisplay = document.getElementById("current-index-display");
@@ -328,6 +334,8 @@ const allMedia = [...images, ...videos].sort((a, b) => {
 
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
+
+  const SLIDE_DURATION_MS = 6000;
 
   let currentIndex = 0;
   let interval: any;
@@ -374,17 +382,12 @@ const allMedia = [...images, ...videos].sort((a, b) => {
           mainVideo.play().catch((e) => console.log("Auto-play prevent:", e));
         }
       }
-      if (bgBlur) bgBlur.style.opacity = "0";
     } else {
       if (mainVideo) mainVideo.classList.add("hidden");
       if (mainImg && newSrc) {
         mainImg.classList.remove("hidden");
         // Pre-cambiar SRC sin timeout para instantaneidad
         mainImg.src = newSrc;
-        if (bgBlur) {
-          bgBlur.src = newSrc;
-          bgBlur.style.opacity = "0.4";
-        }
       }
     }
 
@@ -417,7 +420,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
       progressBar.style.width = "0%";
       if (!isPaused && isVisible) {
         setTimeout(() => {
-          progressBar.style.transition = "width 6000ms linear";
+          progressBar.style.transition = `width ${SLIDE_DURATION_MS}ms linear`;
           progressBar.style.width = "100%";
         }, 50);
       }
@@ -432,7 +435,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
         currentIndex = (currentIndex + 1) % thumbBtns.length;
         updateGallery(currentIndex);
       }
-    }, 6000);
+    }, SLIDE_DURATION_MS);
   }
 
   function stopAutoPlay() {
