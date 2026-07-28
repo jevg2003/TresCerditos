@@ -50,7 +50,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
 
 <section
   id="galeria"
-  class="py-10 md:py-16 bg-white dark:bg-zinc-950 reveal overflow-hidden"
+  class="py-10 md:py-16 bg-white reveal overflow-hidden"
 >
   <div class="w-full">
     <div
@@ -58,11 +58,11 @@ const allMedia = [...images, ...videos].sort((a, b) => {
     >
       <div class="text-center md:text-left">
         <h2
-          class="text-4xl md:text-6xl font-black uppercase italic text-zinc-900 dark:text-white"
+          class="text-4xl md:text-6xl font-black uppercase italic text-zinc-900"
         >
           Nuestra <span class="text-red-700">Galería</span>
         </h2>
-        <p class="text-zinc-500 dark:text-zinc-400 font-medium mt-2">
+        <p class="text-zinc-500 font-medium mt-2">
           Momentos capturados para tu paladar.
         </p>
       </div>
@@ -114,7 +114,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
             </svg>
           </div>
           <span
-            class="text-xs font-black uppercase tracking-[0.2em] text-zinc-600 dark:text-zinc-400"
+            class="text-xs font-black uppercase tracking-[0.2em] text-zinc-600"
             id="pause-text">Pausar</span
           >
         </button>
@@ -125,7 +125,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
             class="text-2xl font-black text-red-700 italic leading-none"
             >01</span
           >
-          <div class="w-px h-6 bg-zinc-300 dark:bg-zinc-700"></div>
+          <div class="w-px h-6 bg-zinc-300"></div>
           <span
             class="text-sm font-bold text-zinc-400 uppercase tracking-widest leading-none"
             >{allMedia.length.toString().padStart(2, "0")}</span
@@ -136,7 +136,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
 
     <div
       id="gallery-observer-target"
-      class="relative group w-full h-[45vh] md:h-[55vh] max-h-[600px] overflow-hidden bg-black border-y border-zinc-200 dark:border-zinc-800 touch-pan-y cursor-grab active:cursor-grabbing"
+      class="relative group w-full h-[45vh] md:h-[55vh] max-h-[600px] overflow-hidden bg-black border-y border-zinc-200 touch-pan-y cursor-grab active:cursor-grabbing"
     >
       <!-- IMAGE ELEMENT -->
       {
@@ -173,7 +173,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
       >
         <button
           id="prev-btn"
-          class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center -translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700"
+          class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center -translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700"
           aria-label="Ver imagen anterior de la galería"
         >
           <svg
@@ -191,7 +191,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
         </button>
         <button
           id="next-btn"
-          class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700"
+          class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700"
           aria-label="Ver siguiente imagen de la galería"
         >
           <svg
@@ -227,7 +227,7 @@ const allMedia = [...images, ...videos].sort((a, b) => {
         {
           allMedia.map((media, index) => (
             <button
-              class="thumb-btn flex-shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-36 md:h-24 rounded-[14px] md:rounded-2xl overflow-hidden relative transition-all duration-300 opacity-60 hover:opacity-100 border-2 border-transparent outline-none bg-zinc-100 dark:bg-zinc-900"
+              class="thumb-btn flex-shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-36 md:h-24 rounded-[14px] md:rounded-2xl overflow-hidden relative transition-all duration-300 opacity-60 hover:opacity-100 border-2 border-transparent outline-none bg-zinc-100"
               data-src={
                 media.type === "img" ? (media.src as any).src : media.src
               }
@@ -283,11 +283,6 @@ const allMedia = [...images, ...videos].sort((a, b) => {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  :global(.dark) .control-box {
-    background-color: var(--color-zinc-900);
-    border-color: var(--color-zinc-800);
-  }
-
   .custom-scrollbar::-webkit-scrollbar {
     height: 6px;
   }
@@ -297,9 +292,6 @@ const allMedia = [...images, ...videos].sort((a, b) => {
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: #dc2626;
     border-radius: 10px;
-  }
-  :global(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #dc2626;
   }
 
   .no-scrollbar::-webkit-scrollbar {
