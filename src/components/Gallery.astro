@@ -193,7 +193,7 @@ import { galleryMedia } from "../lib/media";
         {
           galleryMedia.map((media, index) => (
             <button
-              class="thumb-btn flex-shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-36 md:h-24 rounded-[14px] md:rounded-2xl overflow-hidden relative transition-all duration-300 opacity-60 hover:opacity-100 border-2 border-transparent bg-zinc-100"
+              class="thumb-btn flex-shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-36 md:h-24 rounded-card overflow-hidden relative transition-all duration-300 opacity-60 hover:opacity-100 border-2 border-transparent bg-zinc-100"
               data-src={media.kind === "image" ? media.src.src : media.src}
               data-type={media.kind === "image" ? "img" : "video"}
               data-index={index}

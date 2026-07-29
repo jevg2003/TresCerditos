@@ -56,8 +56,8 @@ const productos: Producto[] = [
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     {
       productos.map((p) => (
-        <div class="bg-zinc-50 p-3 rounded-[2.5rem] border border-zinc-200 hover:shadow-2xl transition-all group flex flex-col h-full">
-          <div class="h-64 bg-zinc-200 rounded-[2rem] overflow-hidden relative shrink-0">
+        <div class="bg-zinc-50 p-3 rounded-card border border-zinc-200 hover:shadow-2xl transition-all group flex flex-col h-full">
+          <div class="h-64 bg-zinc-200 rounded-card overflow-hidden relative shrink-0">
             <Image
               src={p.imagen}
               widths={[400, 600, 800]}
