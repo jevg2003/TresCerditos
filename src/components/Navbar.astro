@@ -25,7 +25,7 @@ import logo from '../assets/images/logo.png';
       <a href="#contacto" class="bg-red-600 text-white px-8 py-3 rounded-full hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:scale-105 transition-all">Pedir</a>
     </div>
 
-    <button class="md:hidden relative w-10 h-10 flex items-center justify-center group" id="menu-btn" aria-label="Abrir menú">
+    <button class="md:hidden relative w-10 h-10 flex items-center justify-center group" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
       <div class="flex flex-col gap-1.5 w-6 transition-all duration-300" id="hamburger-icon">
         <span class="w-full h-1 bg-red-600 rounded-full transition-all duration-300 origin-center line-1"></span>
         <span class="w-full h-1 bg-red-600 rounded-full transition-all duration-300 line-2"></span>
@@ -84,7 +84,9 @@ import logo from '../assets/images/logo.png';
 
   function toggleMenu() {
     const isOpen = btn?.classList.toggle('is-open');
-    
+    btn?.setAttribute('aria-expanded', String(!!isOpen));
+    btn?.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+
     if (isOpen) {
       // 2. BLOQUEAR SCROLL
       body.classList.add('overflow-hidden');
@@ -95,6 +97,7 @@ import logo from '../assets/images/logo.png';
       body.classList.remove('overflow-hidden');
       menu?.classList.remove('show');
       setTimeout(() => menu?.classList.add('hidden'), 300);
+      (btn as HTMLElement | null)?.focus();
     }
   }
 
