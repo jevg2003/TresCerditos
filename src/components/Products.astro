@@ -49,33 +49,35 @@ const productos: Producto[] = [
 ];
 ---
 
-<section id="productos" class="py-20" data-reveal>
-  <h2 class="text-4xl md:text-6xl font-bold mb-12 uppercase tracking-tight text-center md:text-left">
-    Nuestros <span class="text-brand-600">Manjares</span>
-  </h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-    {
-      productos.map((p) => (
-        <div class="bg-zinc-50 p-3 rounded-card border border-zinc-200 hover:shadow-2xl transition-all group flex flex-col h-full">
-          <div class="h-64 bg-zinc-200 rounded-card overflow-hidden relative shrink-0">
-            <Image
-              src={p.imagen}
-              widths={[400, 600, 800]}
-              sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
-              format="webp"
-              alt={`${p.nombre} — Lechonería Los Tres Cerditos, Cali`}
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              loading="lazy"
-            />
+<section id="productos" class="pt-20 pb-20" data-reveal>
+  <div class="mx-auto max-w-7xl px-4 md:px-8">
+    <h2 class="text-4xl md:text-6xl font-bold mb-12 uppercase tracking-tight text-center md:text-left">
+      Nuestros <span class="text-brand-600">Manjares</span>
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        productos.map((p) => (
+          <div class="bg-zinc-50 p-3 rounded-card border border-zinc-200 hover:shadow-2xl transition-all group flex flex-col h-full">
+            <div class="h-64 bg-zinc-200 rounded-card overflow-hidden relative shrink-0">
+              <Image
+                src={p.imagen}
+                widths={[400, 600, 800]}
+                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                format="webp"
+                alt={`${p.nombre} — Lechonería Los Tres Cerditos, Cali`}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+              <h3 class="text-2xl font-bold">{p.nombre}</h3>
+              <p class="text-ink-700 text-sm mt-3 leading-relaxed flex-grow">
+                {p.desc}
+              </p>
+            </div>
           </div>
-          <div class="p-6 flex flex-col flex-grow">
-            <h3 class="text-2xl font-bold">{p.nombre}</h3>
-            <p class="text-ink-700 text-sm mt-3 leading-relaxed flex-grow">
-              {p.desc}
-            </p>
-          </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
   </div>
 </section>
