@@ -1,0 +1,71 @@
+---
+interface Resena {
+  autor: string;
+  texto: string;
+}
+
+const resenas: Resena[] = [
+  {
+    autor: "Elizabeth Gómez Martínez",
+    texto: "Deliciosa lechona, el sabor es muy rico, tiene buena arveja y bastante carnuda, me parece que el sabor no es empalagoso como en otros lugares que he probado.",
+  },
+  {
+    autor: "Carlos González",
+    texto: "Es una excelente lechona, la mejor de Cali, cuero tostadito y carne pulpa sin gordo. Nos encantó a todos, la recomiendo a ojos cerrados.",
+  },
+  {
+    autor: "Diana Ruiz",
+    texto: "Muy deliciosa la lechona.",
+  },
+  {
+    autor: "Heiner Granada",
+    texto: "Las mejores lechonas de Cali, del mundo y sus alrededores. Excelente atención, ubicación central. Relación costo-beneficio insuperable.",
+  },
+  {
+    autor: "Daniela Cataño Medina",
+    texto: "Es deliciosa. En el local entregan para llevar o a domicilio.",
+  },
+  {
+    autor: "Andrés Quesada",
+    texto: "Excelente el producto, muy delicioso y bien cargado. La atención por parte de sus dueños es muy buena, si vas a hacer negocio te la recomiendo 100%.",
+  },
+  {
+    autor: "Andrea Renteria",
+    texto: "Pedí 90 cajas de lechona, llegaron muy puntuales y sabía rica.",
+  },
+  {
+    autor: "Hernán Orbes",
+    texto: "Un gran lugar con una lechona de rechupete y un servicio muy bueno y un ambiente bien.",
+  },
+];
+---
+
+<section id="resenas" class="pt-20 pb-20" data-reveal>
+  <div class="mx-auto max-w-7xl px-4 md:px-8">
+    <div class="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <h2 class="text-4xl md:text-6xl font-bold uppercase tracking-tight text-ink-900">
+        Lo que dicen <span class="text-brand-600">nuestros clientes</span>
+      </h2>
+      <a
+        href="https://www.google.com/maps/place/Lechonas+Los+Tres+Cerditos/@3.437769,-76.5100788,19.59z/data=!4m7!3m6!1s0x8e30a6fbc423b5dd:0x2bcb3bf0c5f8186a!8m2!3d3.437878!4d-76.509231!10e1!16s%2Fg%2F11pzyqpfq5"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex w-fit items-center gap-2 rounded-pill bg-surface-50 px-5 py-3 ring-1 ring-ink-300/60 font-semibold text-ink-900 hover:ring-brand-600 transition-colors"
+      >
+        <span class="text-brand-600 font-black text-xl">4.5 ★</span>
+        <span class="text-sm text-ink-700">91 reseñas en Google Maps</span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      {
+        resenas.map((r) => (
+          <blockquote class="flex flex-col rounded-card bg-surface-50 p-6 ring-1 ring-ink-300/60">
+            <p class="flex-1 text-sm leading-relaxed text-ink-700">"{r.texto}"</p>
+            <footer class="mt-4 text-sm font-semibold text-ink-900">— {r.autor}</footer>
+          </blockquote>
+        ))
+      }
+    </div>
+  </div>
+</section>
