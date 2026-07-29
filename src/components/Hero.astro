@@ -1,12 +1,15 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import heroImage from "../assets/images/imagen-01.png";
 ---
 
 <section id="inicio" class="relative h-screen w-full overflow-hidden">
-  <img
-    src={heroImage.src}
-    alt="Lechoneria Los Tres Cerditos Cali"
+  <Picture
+    src={heroImage}
+    formats={["avif", "webp"]}
+    widths={[640, 960, 1280, 1920]}
+    sizes="100vw"
+    alt="Lechona tolimense recién horneada de Lechonería Los Tres Cerditos en Cali"
     class="absolute inset-0 w-full h-full object-cover scale-105"
     loading="eager"
     fetchpriority="high"
