@@ -1524,7 +1524,7 @@ Accepted, not fixed:
 
 What the report *can* say honestly:
 - `dist/` is 33 MB total, but that includes every responsive AVIF/WebP/JPEG variant Astro generates per image (multiple widths × formats) — a single page load only fetches the variants matching the viewport, not the full 33 MB.
-- `public/images/*.mp4` is still 21 MB, unre-encoded — Task 11 Step 3 (ffmpeg re-encode) and Task 10 Step 2 (poster generation) were both skipped because **no `ffmpeg` binary is available in this environment**. The 7 gallery video thumbnails currently reference `/images/posters/*.webp` files that do not exist and will 404 (broken thumbnail image, video itself still plays on click). This is the single largest known real gap left by this plan — fixing it requires running Task 10 Step 2 and Task 11 Step 3 on a machine with `ffmpeg` installed.
+- **Resolved 2026-07-29:** `ffmpeg` installed via `winget install Gyan.FFmpeg`. Task 10 Step 2 (poster generation) and Task 11 Step 3 (video re-encode) now both run. `public/images/*.mp4` dropped from 21 MB to 12 MB, all 7 gallery video thumbnails have real posters and no longer 404.
 - The one JS bundle (GSAP + ScrollTrigger + motion.ts) is 113 KB minified — real weight, and Lighthouse's "unminified/unused JavaScript" opportunity on it is inflated by the same preview-server artifact above (the file is confirmed minified by inspection).
 
 **Manual pass:**
