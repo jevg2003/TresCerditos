@@ -1481,6 +1481,15 @@ Finding A6. Numbered narration comments in mixed Spanish/English (`// 1. CLASE P
 
 # PHASE 8 — Final verification
 
+### Task 25: Guidelines audit — findings
+
+Fixed: every `transition-all` in `src/components/` (ContactFab, Footer, Gallery, Hero, Location, Navbar) replaced with Tailwind's default `transition` utility — it excludes layout-triggering properties (width/height/margin) that `transition-all` would include, so hover/reveal animations no longer risk forced reflow.
+
+Accepted, not fixed:
+- **No `<link rel="preload">` for the self-hosted display font.** The hashed filename only exists after `pnpm build`; hardcoding it would go stale on the next font/build change. The fonts are self-hosted (no third-party connection) and `@font-face` is declared at the top of `global.css`, so the browser discovers and requests it early regardless.
+- **Gallery renders all 63 media items without virtualization.** At this catalog size (33 photos + 7 videos, one business) virtualization is complexity without benefit; revisit if the gallery grows past ~150 items.
+- **Dark mode / `color-scheme`.** Task 3 removed dark mode entirely — a `color-scheme` declaration has nothing to switch, so it is out of scope here (tracked in the plan's "Deferred" section).
+
 ### Task 25: Guidelines audit
 
 > **Invoke `web-design-guidelines`** against every file in `src/`.
