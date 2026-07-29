@@ -47,12 +47,11 @@ import logo from '../assets/images/logo.png';
 </nav>
 
 <style>
-  /* 1. CLASE PARA BLOQUEAR SCROLL */
   :global(body.overflow-hidden) {
     overflow: hidden;
   }
 
-  /* Animación de la Hamburguesa a X */
+  /* Hamburger-to-X animation */
   #menu-btn.is-open .line-1 {
     transform: translateY(10px) rotate(45deg);
   }
@@ -64,13 +63,11 @@ import logo from '../assets/images/logo.png';
     transform: translateY(-10px) rotate(-45deg);
   }
 
-  /* Animación del Menú */
   #mobile-menu.show {
     display: block;
     opacity: 1;
     transform: translateY(0);
   }
-  /* Clase para ocultar el navbar */
   .nav-hidden {
     transform: translateY(-100%);
   }
@@ -88,12 +85,10 @@ import logo from '../assets/images/logo.png';
     btn?.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
 
     if (isOpen) {
-      // 2. BLOQUEAR SCROLL
       body.classList.add('overflow-hidden');
       menu?.classList.remove('hidden');
       setTimeout(() => menu?.classList.add('show'), 10);
     } else {
-      // 3. LIBERAR SCROLL
       body.classList.remove('overflow-hidden');
       menu?.classList.remove('show');
       setTimeout(() => menu?.classList.add('hidden'), 300);
@@ -109,11 +104,11 @@ import logo from '../assets/images/logo.png';
     });
   });
 
-  // 4. LIMPIADOR PARA PANTALLA COMPLETA (RESIZE)
+  // Close the mobile menu if the viewport grows past the md breakpoint while it's open.
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768) { // 768px es el breakpoint 'md' de Tailwind
+    if (window.innerWidth >= 768) {
       if (btn?.classList.contains('is-open')) {
-        toggleMenu(); // Esto cierra el menú y libera el scroll automáticamente
+        toggleMenu();
       }
     }
   });

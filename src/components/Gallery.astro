@@ -314,7 +314,7 @@ import { galleryMedia } from "../lib/media";
     clearTimeout(interactionTimeout);
     interactionTimeout = setTimeout(() => {
       isUserInteracting = false;
-    }, 3000); // 3 segundos sin tocar para retomar el scroll automático
+    }, 3000); // resume auto-scroll after 3s of no interaction
   }
 
   container?.addEventListener("mousedown", setInteracting);
@@ -350,7 +350,6 @@ import { galleryMedia } from "../lib/media";
       if (mainVideo) mainVideo.classList.add("hidden");
       if (mainImg && newSrc) {
         mainImg.classList.remove("hidden");
-        // Pre-cambiar SRC sin timeout para instantaneidad
         mainImg.src = newSrc;
       }
     }
@@ -366,7 +365,8 @@ import { galleryMedia } from "../lib/media";
       galleryStatus.textContent = `Elemento ${index + 1} de ${thumbBtns.length}`;
     }
 
-    // Reemplazo de scrollIntoView para evitar que el navegador mueva TODA la web
+    // Manual scroll instead of scrollIntoView: the latter scrolls the whole
+    // document, not just the thumbnail strip.
     if (container && !isUserInteracting && !isInit) {
       const btnEl = btn as HTMLElement;
       const scrollPos =
@@ -374,7 +374,7 @@ import { galleryMedia } from "../lib/media";
       container.scrollTo({ left: scrollPos, behavior: "smooth" });
     }
 
-    // Precarga inteligente por JS (prevé warnings)
+    // Preload neighboring slides so navigation feels instant
     const preloadIdxs = [
       (index + 1) % thumbBtns.length,
       (index - 1 + thumbBtns.length) % thumbBtns.length,
@@ -489,13 +489,12 @@ import { galleryMedia } from "../lib/media";
         isVisible = entry.isIntersecting;
         if (isVisible) {
           if (!isPaused) {
-            // Re-sincronizar timer y barra roja al volver a la pantalla
+            // Resync the timer and progress bar when the section re-enters view
             updateGallery(currentIndex, false, true);
           }
         } else {
           stopAutoPlay();
           if (mainVideo) mainVideo.pause();
-          // Detener físicamente la barra roja para que no siga cargando de forma fantasma
           if (progressBar) {
             progressBar.style.transition = "none";
             progressBar.style.width = "0%";
@@ -503,8 +502,8 @@ import { galleryMedia } from "../lib/media";
         }
       });
     },
-    { threshold: 0.3 },
-  ); // Pausar rigurosamente cuando se scrollea fuera (30% visibilidad)
+    { threshold: 0.3 }, // pause once less than 30% of the section is visible
+  );
 
   if (galleryBox) observer.observe(galleryBox);
 
@@ -514,6 +513,5 @@ import { galleryMedia } from "../lib/media";
     if (pauseText) pauseText.textContent = "Reanudar";
   }
 
-  // Initialize sin scroll inicial
   setTimeout(() => updateGallery(0, false, true), 100);
 </script>
