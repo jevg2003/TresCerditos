@@ -26,6 +26,7 @@ pnpm-debug.log*
 # local Claude Code settings (per-developer)
 .claude/settings.local.json
 .tokensave
+.atl/
 
 # scratch / debug artifacts
 build_*.txt
