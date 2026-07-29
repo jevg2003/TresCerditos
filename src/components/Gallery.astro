@@ -16,11 +16,9 @@ import { galleryMedia } from "../lib/media";
         <h2
           class="text-4xl md:text-6xl font-bold uppercase tracking-tight text-zinc-900"
         >
-          Nuestra <span class="text-red-700">Galería</span>
+          Nuestra <span class="text-brand-700">Galería</span>
         </h2>
-        <p class="text-ink-700 font-medium mt-2">
-          Momentos capturados para tu paladar.
-        </p>
+
       </div>
 
       <div
@@ -33,11 +31,11 @@ import { galleryMedia } from "../lib/media";
           aria-label="Alternar pausa o reproducción de la galería automática"
         >
           <div
-            class="relative w-6 h-6 flex items-center justify-center text-red-700"
+            class="relative w-6 h-6 flex items-center justify-center text-brand-700"
           >
             <svg
               id="pause-icon"
-              class="w-6 h-6 text-red-700 font-bold"
+              class="w-6 h-6 text-brand-700 font-bold"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -51,7 +49,7 @@ import { galleryMedia } from "../lib/media";
             </svg>
             <svg
               id="play-icon"
-              class="w-6 h-6 text-red-700 font-bold hidden"
+              class="w-6 h-6 text-brand-700 font-bold hidden"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -78,7 +76,7 @@ import { galleryMedia } from "../lib/media";
         <div class="control-box font-bold">
           <span
             id="current-index-display"
-            class="text-2xl font-black text-red-700 italic leading-none"
+            class="text-2xl font-black text-brand-700 italic leading-none"
             >01</span
           >
           <div class="w-px h-6 bg-zinc-300"></div>
@@ -137,7 +135,7 @@ import { galleryMedia } from "../lib/media";
       >
         <button
           id="prev-btn"
-          class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center -translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700"
+          class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center -translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-brand-700"
           aria-label="Ver imagen anterior de la galería"
         >
           <svg
@@ -155,7 +153,7 @@ import { galleryMedia } from "../lib/media";
         </button>
         <button
           id="next-btn"
-          class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-red-700"
+          class="pointer-events-auto w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center translate-x-10 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-brand-700"
           aria-label="Ver siguiente imagen de la galería"
         >
           <svg
@@ -174,7 +172,7 @@ import { galleryMedia } from "../lib/media";
       </div>
 
       <div
-        class="absolute bottom-0 left-0 h-1.5 bg-red-700 z-40 transition-all ease-linear w-0"
+        class="absolute bottom-0 left-0 h-1.5 bg-brand-700 z-40 transition-all ease-linear w-0"
         id="progress-bar"
       >
       </div>
@@ -258,7 +256,7 @@ import { galleryMedia } from "../lib/media";
     background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #dc2626;
+    background-color: var(--color-brand-600);
     border-radius: 10px;
   }
 
@@ -272,9 +270,9 @@ import { galleryMedia } from "../lib/media";
 
   .thumb-btn.is-active {
     opacity: 1 !important;
-    border-color: var(--color-red-600);
+    border-color: var(--color-brand-600);
     transform: scale(1.08) translateY(-2px);
-    box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.4);
+    box-shadow: 0 10px 20px -5px oklch(0.577 0.245 27.325 / 0.4);
     z-index: 10;
   }
 </style>
