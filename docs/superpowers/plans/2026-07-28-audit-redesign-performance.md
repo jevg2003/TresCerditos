@@ -1508,6 +1508,28 @@ Accepted, not fixed:
 
 ---
 
+### Task 26: Measure, then report honestly — results
+
+**Measured 2026-07-29** against `pnpm build && pnpm preview` on this dev machine, Lighthouse 13.4.1, headless Chrome, simulated mobile throttling. Not a CDN-hosted deployment — see caveat below.
+
+| Category | Score | Target | Met? |
+|---|---|---|---|
+| Performance | 28–55 (see caveat) | ≥ 90 | **No** |
+| Accessibility | 100 | ≥ 95 | Yes |
+| Best Practices | 100 | — | Yes |
+| SEO | 100 | 100 | Yes |
+| CLS | 0 | — | Yes |
+
+**Performance did not hit target, and the number is not fully trustworthy.** Two consecutive runs against the same local `astro preview` server returned 55 and 28 — a 27-point swing with no code change between them, and the first run's `redirects` audit reported ~13.8s "wasted" on the *same* URL fetched twice, which is a measurement artifact of `astro preview`'s minimal static server (no compression, no HTTP/2, no CDN) under headless-Chrome throttling, not a real redirect. LCP read 17.4s and 10.0s across the two runs. These absolute numbers should not be taken as the production figure; re-measure against the actual deployed host once one exists.
+
+What the report *can* say honestly:
+- `dist/` is 33 MB total, but that includes every responsive AVIF/WebP/JPEG variant Astro generates per image (multiple widths × formats) — a single page load only fetches the variants matching the viewport, not the full 33 MB.
+- `public/images/*.mp4` is still 21 MB, unre-encoded — Task 11 Step 3 (ffmpeg re-encode) and Task 10 Step 2 (poster generation) were both skipped because **no `ffmpeg` binary is available in this environment**. The 7 gallery video thumbnails currently reference `/images/posters/*.webp` files that do not exist and will 404 (broken thumbnail image, video itself still plays on click). This is the single largest known real gap left by this plan — fixing it requires running Task 10 Step 2 and Task 11 Step 3 on a machine with `ffmpeg` installed.
+- The one JS bundle (GSAP + ScrollTrigger + motion.ts) is 113 KB minified — real weight, and Lighthouse's "unminified/unused JavaScript" opportunity on it is inflated by the same preview-server artifact above (the file is confirmed minified by inspection).
+
+**Manual pass:**
+- 375 / 768 / 1024 / 1440 px, JS-disabled content visibility, `prefers-reduced-motion`, and keyboard-only navigation were verified per-task as each task's own Step 5/6 landed (Tasks 6, 14, 15, 16, 20–23) — not re-run as one combined pass in this session.
+
 ### Task 26: Measure, then report honestly
 
 - [ ] **Step 1: Build and serve**
