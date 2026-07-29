@@ -49,8 +49,6 @@
   const fabMenu = document.getElementById('fab-menu');
   const iconPlate = document.getElementById('icon-plate');
   const iconClose = document.getElementById('icon-close');
-  const fabContainer = document.getElementById('contact-fab-container');
-  const footer = document.querySelector('footer');
 
   let isOpen = false;
 
@@ -95,24 +93,6 @@
       iconClose?.classList.remove('opacity-100', 'scale-100', 'rotate-0');
       
       fabMain?.classList.remove('ring-4', 'ring-red-500/20');
-    }
-  });
-
-  // Footer scroll logic
-  window.addEventListener('scroll', () => {
-    if (footer && fabContainer) {
-      const footerTop = footer.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-      
-      if (footerTop < windowHeight + 50) {
-        fabContainer.style.opacity = '0';
-        fabContainer.style.pointerEvents = 'none';
-        fabContainer.style.transform = 'translateY(20px)';
-      } else {
-        fabContainer.style.opacity = '1';
-        fabContainer.style.pointerEvents = 'none'; // Background container always transparent to touches
-        fabContainer.style.transform = 'translateY(0)';
-      }
     }
   });
 </script>

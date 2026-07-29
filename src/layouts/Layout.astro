@@ -107,31 +107,13 @@
     border-radius: 10px;
   }
 
-  /* Animaciones de Entrada (Scroll Reveal) */
-  .reveal {
+  #contact-fab-container.is-hidden {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .reveal.active {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(20px);
+    pointer-events: none;
   }
 </style>
 
 <script>
-  // Script para activar animaciones al hacer scroll
-  const reveal = () => {
-    const reveals = document.querySelectorAll(".reveal");
-    reveals.forEach((el) => {
-      const windowHeight = window.innerHeight;
-      const elementTop = el.getBoundingClientRect().top;
-      if (elementTop < windowHeight - 100) {
-        el.classList.add("active");
-      }
-    });
-  };
-  window.addEventListener("scroll", reveal);
-  window.addEventListener("load", reveal);
+  import "../scripts/motion";
 </script>
