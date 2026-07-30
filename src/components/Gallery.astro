@@ -1,6 +1,18 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import { galleryMedia } from "../lib/media";
+
+/** Main-stage swap is driven by plain <img>/JS, so images must be
+ * pre-optimized to webp here rather than relying on the <Image> component. */
+const mainStageSrcs = await Promise.all(
+  galleryMedia.map((media) =>
+    media.kind === "image"
+      ? getImage({ src: media.src, format: "webp", width: 1280 }).then(
+          (img) => img.src,
+        )
+      : media.src,
+  ),
+);
 ---
 
 <section
@@ -100,18 +112,15 @@ import { galleryMedia } from "../lib/media";
         galleryMedia.length > 0 && (
           <img
             id="main-stage"
-            src={
-              galleryMedia[0].kind === "image" ? galleryMedia[0].src.src : ""
-            }
+            src={galleryMedia[0].kind === "image" ? mainStageSrcs[0] : ""}
             alt=""
             draggable="false"
             class:list={[
               "relative w-full h-full object-contain transition duration-700 ease-in-out z-10 hover:scale-105 select-none",
               galleryMedia[0].kind === "video" && "hidden",
             ]}
-            loading="eager"
-            decoding="sync"
-            fetchpriority="high"
+            loading="lazy"
+            decoding="async"
           />
         )
       }
@@ -192,7 +201,7 @@ import { galleryMedia } from "../lib/media";
           galleryMedia.map((media, index) => (
             <button
               class="thumb-btn flex-shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-36 md:h-24 rounded-card overflow-hidden relative transition duration-300 opacity-60 hover:opacity-100 border-2 border-transparent bg-zinc-100"
-              data-src={media.kind === "image" ? media.src.src : media.src}
+              data-src={media.kind === "image" ? mainStageSrcs[index] : media.src}
               data-type={media.kind === "image" ? "img" : "video"}
               data-index={index}
               aria-label={`Ver elemento ${index + 1} de ${galleryMedia.length}`}

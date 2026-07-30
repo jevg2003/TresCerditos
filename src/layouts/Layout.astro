@@ -1,4 +1,6 @@
 ---
+import bricolageWoff from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
+import interWoff from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 ---
 
 <!doctype html>
@@ -6,6 +8,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" as="font" type="font/woff2" href={bricolageWoff} crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href={interWoff} crossorigin="anonymous" />
     <link rel="icon" type="image/webp" sizes="96x96" href="/favicon.webp" />
     <link rel="icon" type="image/webp" sizes="48x48" href="/favicon-48.webp" />
     <meta name="generator" content={Astro.generator} />
