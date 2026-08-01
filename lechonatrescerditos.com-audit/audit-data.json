@@ -1,0 +1,207 @@
+{
+  "summary": {
+    "health_score": 60,
+    "business_type": "Restaurante local (lechonería) - brick-and-mortar, Cali, Colombia",
+    "top_findings": [
+      "JSON-LD de horarios solo cubre sábado/domingo/festivos; Google puede mostrar el negocio como cerrado de lunes a viernes pese a que la página dice que sí atiende (llamar para confirmar).",
+      "Subdominio www.lechonatrescerditos.com falla el handshake TLS (sin certificado válido, sin redirect a apex).",
+      "Nombre del negocio inconsistente: Google Business Profile dice \"Lechonas Los Tres Cerditos\", el sitio y el JSON-LD dicen \"Lechonería (Los) Tres Cerditos\".",
+      "Contradicción de contenido: el hero dice receta \"tolimense\" y la sección Misión dice \"vallecaucana\" en la misma página.",
+      "Contenido muy delgado: ~343 palabras totales en todo el sitio (sitio de una sola página), sin precios ni reseñas visibles."
+    ],
+    "quick_wins": [
+      "Agregar horario lunes-viernes al JSON-LD (o corregir a los horarios reales).",
+      "Emitir certificado TLS para www o eliminar el registro DNS del subdominio.",
+      "Unificar el nombre del negocio entre GBP, sitio y schema.",
+      "Corregir la contradicción tolimense/vallecaucana (un solo cambio de texto).",
+      "Precargar (preload) las fuentes .woff2 críticas para bajar el LCP.",
+      "Reemplazar los 2 JPG sin optimizar por las variantes AVIF/WebP ya generadas (176 KiB de ahorro).",
+      "Agregar sameAs (Facebook/Instagram) al JSON-LD.",
+      "Agregar headers de seguridad: CSP, X-Content-Type-Options, X-Frame-Options."
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 84,
+      "what_works": [
+        "Crawlability/indexabilidad/canonical correctos para el alcance de una sola página",
+        "SSR/estático completo (Astro), sin dependencia de JS para renderizar",
+        "Buena higiene de CWV en el código fuente: fetchpriority en imagen hero, width/height explícitos, srcset responsive, WebP/AVIF, lazy-loading"
+      ],
+      "findings": [
+        {"title": "TLS roto en www.lechonatrescerditos.com", "severity": "High", "description": "SEC_E_WRONG_PRINCIPAL: sin certificado válido, sin redirect al apex.", "recommendation": "Emitir certificado para www + redirect 308 al apex, o remover el registro DNS del subdominio."},
+        {"title": "Faltan headers de seguridad", "severity": "Medium", "description": "Sin Content-Security-Policy, X-Content-Type-Options, X-Frame-Options.", "recommendation": "Agregar los tres headers a nivel de Vercel/Astro config."},
+        {"title": "Title tag malformado/sobredimensionado", "severity": "Low", "description": "El <title> tiene saltos de línea y es muy largo.", "recommendation": "Limpiar a una sola línea, <60 caracteres idealmente."},
+        {"title": "HSTS incompleto", "severity": "Low", "description": "Falta includeSubDomains;preload.", "recommendation": "Agregar directivas faltantes al header Strict-Transport-Security."},
+        {"title": "Faltan Referrer-Policy/Permissions-Policy; ACAO * en el HTML; meta keywords obsoleto; sin IndexNow", "severity": "Low", "description": "Hardening adicional pendiente.", "recommendation": "Agregar headers restantes, remover ACAO * del documento HTML, remover meta keywords, evaluar IndexNow."}
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 40,
+      "what_works": [
+        "Redacción clara y legible (oraciones cortas, directas)",
+        "Ningún contenido duplicado real (el aparente duplicado detectado era artefacto del parser)"
+      ],
+      "findings": [
+        {"title": "Contenido delgado a nivel de sitio completo", "severity": "Critical", "description": "~343 palabras únicas en todo el sitio (una sola página Astro), sin blog/FAQ/páginas de servicio, por debajo del piso recomendado de 500 palabras para un homepage.", "recommendation": "Expandir con secciones de menú detallado, historia real de la familia, zona de domicilios, FAQ."},
+        {"title": "Sin precios en ningún lado", "severity": "High", "description": "Solo priceRange genérico \"$$\" en schema; ningún precio visible en el sitio.", "recommendation": "Publicar precios reales por producto/porción."},
+        {"title": "Sin reseñas/testimonios en la página", "severity": "High", "description": "Presencia activa en Facebook/Instagram pero sin traerla a la página.", "recommendation": "Agregar widget de reseñas o testimonios con AggregateRating."},
+        {"title": "Claim de \"receta secreta de la familia\" sin especificidad", "severity": "Medium", "description": "Repetido sin año de fundación, nombre de familia, ni detalle de proceso.", "recommendation": "Agregar detalles concretos (año, nombre, anécdota) para credibilidad E-E-A-T real."},
+        {"title": "Gaps de citabilidad para IA", "severity": "Medium", "description": "Sin Menu/MenuItem schema, sin FAQPage, horario laboral incompleto en structured data.", "recommendation": "Agregar los schemas faltantes."}
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 55,
+      "what_works": [
+        "H1 único y presente en el hero",
+        "CTA principal visible sin scroll"
+      ],
+      "findings": [
+        {"title": "Title tag malformado", "severity": "Low", "description": "Ver hallazgo técnico duplicado — saltos de línea y longitud excesiva.", "recommendation": "Reescribir en una línea."},
+        {"title": "H2/H3 genéricos, no orientados a preguntas", "severity": "Medium", "description": "Estructura de encabezados no aprovecha intención de búsqueda conversacional/AI Overviews.", "recommendation": "Reescribir encabezados clave como preguntas reales de usuarios."},
+        {"title": "Cero enlazado interno", "severity": "High", "description": "Sitio de una sola página sin /menu, /contacto, /galeria, /domicilios.", "recommendation": "Evaluar expandir a multi-página si el negocio quiere competir con sitios de 4500+ palabras y listados de Rappi."}
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 50,
+      "what_works": [
+        "Un bloque JSON-LD válido, renderizado en servidor",
+        "LocalBusiness con PostalAddress/GeoCoordinates correctos"
+      ],
+      "findings": [
+        {"title": "Horario incompleto contradice el contenido visible", "severity": "Critical", "description": "openingHoursSpecification solo cubre sábado/domingo/festivos; el texto de la página describe también horario lunes-viernes.", "recommendation": "Agregar el horario Lunes-Viernes real (decisión pendiente del dueño del negocio) al JSON-LD."},
+        {"title": "@type genérico LocalBusiness en vez de Restaurant", "severity": "High", "description": "Ya usa servesCuisine, propiedad exclusiva de Restaurant/FoodEstablishment.", "recommendation": "Cambiar @type a Restaurant."},
+        {"title": "image apunta a favicon 96x96, sin sameAs, sin Menu/MenuItem", "severity": "Medium", "description": "Oportunidades de enriquecimiento no aprovechadas.", "recommendation": "Usar foto real como image, agregar sameAs con FB/IG, estructurar Menu/MenuItem para los 6 productos existentes (sin inventar precios)."}
+      ]
+    },
+    {
+      "name": "Performance (Core Web Vitals)",
+      "score": 92,
+      "what_works": [
+        "CLS 0 (Good)",
+        "TBT 220ms (Good)",
+        "Sin scripts de terceros",
+        "Peso total de página bajo (795 KiB)"
+      ],
+      "findings": [
+        {"title": "LCP en el límite (2.6s)", "severity": "High", "description": "1002ms de los 2642ms de LCP total son delay de renderizado del H1 hero por fuentes .woff2 no precargadas.", "recommendation": "Agregar <link rel=\"preload\" as=\"font\"> para las dos fuentes críticas."},
+        {"title": "176 KiB de imágenes sin optimizar", "severity": "High", "description": "Galería carga JPG crudos (130 KB y 210 KB) con fetchpriority=high/loading=eager pese a existir variantes AVIF/WebP ya generadas y más livianas, y estar muy por debajo del fold.", "recommendation": "Usar las variantes AVIF/WebP existentes y quitar fetchpriority/eager de imágenes fuera del viewport inicial."},
+        {"title": "CSS render-blocking (11.2 KB)", "severity": "Medium", "description": "~150ms antes del first paint.", "recommendation": "Baja prioridad, ya es pequeño; se resuelve solo combinado con el fix de fuentes."}
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO)",
+      "score": 42,
+      "what_works": [
+        "robots.txt permite todos los AI crawlers (GPTBot, ClaudeBot confirmados con 200 OK)",
+        "Página SSR/estática, totalmente accesible sin ejecutar JS"
+      ],
+      "findings": [
+        {"title": "Ninguna sección citable (134-167 palabras)", "severity": "High", "description": "El párrafo más largo tiene 38 palabras; nada alcanza el rango óptimo para citación de IA.", "recommendation": "Reescribir 2-3 pasajes clave en el rango de 134-167 palabras, respondiendo preguntas reales."},
+        {"title": "Contradicción de origen regional (tolimense vs vallecaucana)", "severity": "High", "description": "Hero/título/meta dicen tradición tolimense; sección Misión dice vallecaucana.", "recommendation": "Corregir a una sola narrativa consistente."},
+        {"title": "Sin llms.txt", "severity": "Medium", "description": "/llms.txt devuelve 404 (no penaliza a Google pero sí es una señal para otros motores de IA).", "recommendation": "Publicar un llms.txt básico."},
+        {"title": "Sin presencia en YouTube ni VideoObject/ImageObject schema", "severity": "Medium", "description": "Correlación documentada (~0.737) entre YouTube y citación de IA, totalmente ausente.", "recommendation": "Evaluar crear canal de YouTube y agregar VideoObject schema al video existente."}
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 65,
+      "what_works": [
+        "Todas las imágenes con alt text",
+        "Formatos modernos (WebP/AVIF) ya generados para la mayoría"
+      ],
+      "findings": [
+        {"title": "2 imágenes de galería sin optimizar (176 KiB de desperdicio)", "severity": "High", "description": "Duplican variantes AVIF/WebP más livianas que ya existen.", "recommendation": "Apuntar a las variantes optimizadas existentes."},
+        {"title": "srcset del hero tope en 784w", "severity": "Medium", "description": "Riesgo de upscale/blur en pantallas >784px CSS width con sizes=100vw.", "recommendation": "Agregar un breakpoint mayor al srcset del hero."}
+      ]
+    },
+    {
+      "name": "Local SEO",
+      "score": 41,
+      "what_works": [
+        "Negocio verificado en Maps con Place ID real",
+        "NAP consistente entre footer, sección ubicación, click-to-call, WhatsApp y schema"
+      ],
+      "findings": [
+        {"title": "Nombre inconsistente entre GBP y sitio", "severity": "Critical", "description": "GBP: \"Lechonas Los Tres Cerditos\" vs sitio/schema: \"Lechonería (Los) Tres Cerditos\".", "recommendation": "Unificar el nombre en todas las superficies."},
+        {"title": "Cero señales de reseñas", "severity": "High", "description": "Sin widget, sin schema de reviews, mayor lastre del score de la dimensión Reviews (20% del peso local).", "recommendation": "Agregar reseñas reales con AggregateRating/Review schema."},
+        {"title": "Schema genérico, sin sameAs, sin Menu/hasMenu, sin aggregateRating", "severity": "Medium", "description": "Oportunidades no aprovechadas ya cubiertas en Schema.", "recommendation": "Ver sección Schema."}
+      ]
+    },
+    {
+      "name": "Search Experience (SXO)",
+      "score": 44,
+      "what_works": [
+        "Media/galería fuerte (posters de video, alt text)",
+        "Clasificación correcta como Local Page (tipo de página correcto)"
+      ],
+      "findings": [
+        {"title": "Mismatch de profundidad vs SERP real", "severity": "High", "description": "Compite con sitios multi-página (~4500 palabras, páginas por barrio/porción) y listados de Rappi con precio+menú+rating visibles; el sitio no tiene nada de eso.", "recommendation": "Decidir: expandir a multi-página con precios/zonas de domicilio, o aceptar el rol de landing simple y derivar tráfico transaccional a Rappi/WhatsApp."},
+        {"title": "Peor persona: comprador por app de domicilios (29/100)", "severity": "High", "description": "Sin zona de cobertura, precio, mínimo de pedido ni flujo de compra en la página, pese a que \"domicilios\" es un modificador de búsqueda dominante.", "recommendation": "Agregar sección de domicilios con zona, mínimo y CTA claro."}
+      ]
+    },
+    {
+      "name": "Backlinks",
+      "score": null,
+      "what_works": [
+        "Verificación de crawler disponible (Tier 0)"
+      ],
+      "findings": [
+        {"title": "Dominio no presente en el grafo de Common Crawl", "severity": "Medium", "description": "No es prueba de cero backlinks — Common Crawl es una muestra parcial de la web y suele no cubrir sitios pequeños de negocio local.", "recommendation": "Obtener API key gratuita de Moz para pasar a Tier 1 (DA/PA, dominios referentes, anchor text)."},
+        {"title": "Sin datos en 7 de 7 factores de scoring ponderado", "severity": "High", "description": "Tier 0 no puede evaluar dominios referentes, calidad, anchor text, ratio tóxico, velocidad de enlaces, follow/nofollow ni relevancia geográfica.", "recommendation": "Priorizar Moz API key como siguiente paso de mayor valor."}
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Fase 1: Correcciones críticas (COMPLETADA)",
+        "timeframe": "Semana 1",
+        "items": [
+          "Horario del schema aclarado (venta directa fin de semana, encargos entre semana) — sin contradicción",
+          "Corregida la contradicción tolimense/vallecaucana — unificado a \"lechona tradicional\"",
+          "TLS de www corregido: dominio agregado en Vercel, DNS validado, redirect 308 a apex funcionando",
+          "Nombre unificado: name = \"Lechonas Los Tres Cerditos\" (oficial GBP), alternateName = \"Lechonería Los Tres Cerditos\" (marca visual)"
+        ]
+      },
+      {
+        "name": "Fase 2: Mejoras de alto impacto (parcial)",
+        "timeframe": "Semanas 2-3",
+        "items": [
+          "Hecho: @type cambiado a Restaurant, sameAs agregado, headers de seguridad (CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy) desplegados vía vercel.json",
+          "Hecho: reseñas reales de Google Maps agregadas en sección Testimonials + AggregateRating (4.5, 91 reseñas reales de GBP)",
+          "Pendiente: precargar fuentes .woff2 críticas (fix LCP)",
+          "Pendiente: reemplazar las 2 imágenes de galería sin optimizar por las variantes AVIF/WebP existentes",
+          "Pendiente (decisión de negocio): precios reales — el dueño prefiere no publicarlos por ahora porque varían; evaluar a futuro"
+        ]
+      },
+      {
+        "name": "Fase 3: Contenido y autoridad",
+        "timeframe": "Mes 2",
+        "items": [
+          "Expandir contenido más allá de 343 palabras: historia real, menú detallado, zona de domicilios",
+          "Reescribir 2-3 pasajes en rango de 134-167 palabras para citabilidad de IA",
+          "Evaluar expansión a páginas adicionales (/menu, /domicilios) si se quiere competir con sitios multi-página"
+        ]
+      },
+      {
+        "name": "Fase 4: Monitoreo e iteración",
+        "timeframe": "Continuo",
+        "items": [
+          "Obtener API key de Moz para desbloquear análisis real de backlinks",
+          "Agregar lastmod al sitemap",
+          "Evaluar presencia en YouTube + VideoObject schema",
+          "Publicar llms.txt básico"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}
