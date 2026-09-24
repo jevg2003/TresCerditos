@@ -1,4 +1,8 @@
-<div id="contact-fab-container" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end pointer-events-none w-fit">
+<!-- Zero-height sticky rail placed just before the footer: the browser pins the
+     FAB to the viewport bottom and stops it at the footer natively, so it stays
+     in sync on fast scrolls (no JS repositioning). z-40 keeps it under the navbar. -->
+<div class="sticky bottom-0 z-40 h-0 pointer-events-none">
+<div id="contact-fab-container" class="absolute bottom-6 right-6 md:bottom-10 md:right-10 flex flex-col items-end pointer-events-none w-fit">
   
   <div id="fab-menu" class="flex flex-col items-end gap-4 mb-5 opacity-0 translate-y-10 pointer-events-none transition duration-300">
     
@@ -46,6 +50,7 @@
     </div>
     <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
   </button>
+</div>
 </div>
 
 <script>
