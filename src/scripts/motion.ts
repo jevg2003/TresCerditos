@@ -38,29 +38,5 @@ function initNavbarAutoHide() {
   });
 }
 
-/** Lifts the contact FAB so it rides just above the site footer instead of
- *  covering it, and drops it back to its corner when scrolling up. */
-function initFabFooterLift() {
-  const fab = document.getElementById("contact-fab-container");
-  // Target the site footer by id: testimonial cards also use <footer>.
-  const footer = document.getElementById("contacto");
-  if (!fab || !footer) return;
-
-  const update = () => {
-    const overlap = window.innerHeight - footer.getBoundingClientRect().top;
-    gsap.set(fab, { y: -Math.max(0, overlap) });
-  };
-
-  ScrollTrigger.create({
-    trigger: footer,
-    start: "top bottom",
-    end: "max",
-    onUpdate: update,
-    onRefresh: update,
-    onLeaveBack: () => gsap.set(fab, { y: 0 }),
-  });
-}
-
 initReveals();
 initNavbarAutoHide();
-initFabFooterLift();
